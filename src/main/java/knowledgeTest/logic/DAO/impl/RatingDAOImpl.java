@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Class handel's Rating type Data Access Object functionality
  */
-@Repository("RatingDAO")
+@Repository("RatingDAOImpl")
 public class RatingDAOImpl extends CustomHibernateDaoSupport<Rating> implements RatingDAO {
 
     public RatingDAOImpl() {

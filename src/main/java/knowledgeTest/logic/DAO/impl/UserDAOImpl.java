@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Class handel's User type Data Access Object functionality
  */
-@Repository("UserDAO")
+@Repository("UserDAOImpl")
 public class UserDAOImpl extends CustomHibernateDaoSupport<User> implements UserDAO {
 
     public UserDAOImpl() {

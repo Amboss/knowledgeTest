@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "TASK", catalog = "KNOWLEDGE_TEST_DB")
 public class Task {
 
-    private long taskId;
+    private Long taskId;
 
     private String question;
 
@@ -19,6 +19,8 @@ public class Task {
 
     private String answer3;
 
+    private String answer4;
+
     private Integer correct;
 
     /**
@@ -26,13 +28,14 @@ public class Task {
      */
     public Task() {}
 
-    public Task(long taskId, String question, String answer1,
-                String answer2, String answer3, Integer correct) {
+    public Task(Long taskId, String question, String answer1, String answer2,
+                String answer3, String answer4, Integer correct) {
         this.taskId = taskId;
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
+        this.answer3 = answer4;
         this.correct = correct;
     }
     /**
@@ -41,11 +44,12 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TASK_ID", unique = true, nullable = false)
-    public long getTaskId() {
+    @PrimaryKeyJoinColumn
+    public Long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(long taskId) {
+    public void setTaskId(Long taskId) {
         this.taskId = taskId;
     }
 
@@ -83,6 +87,15 @@ public class Task {
 
     public void setAnswer3(String answer3) {
         this.answer3 = answer3;
+    }
+
+    @Column(name = "ANSWER4", nullable = true)
+    public String getAnswer4() {
+        return answer4;
+    }
+
+    public void setAnswer4(String answer4) {
+        this.answer4 = answer4;
     }
 
     @Column(name = "CORRECT", nullable = false)

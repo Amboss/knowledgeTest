@@ -2,6 +2,7 @@ package knowledgeTest.logic.DAO.support;
 
 import knowledgeTest.logic.DAO.DAO;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class CustomHibernateDaoSupport<T> implements DAO<T> {
         this.sessionFactory = sessionFactory;
     }
 
-    private SessionFactory  getSessionFactory() {
+    private SessionFactory getSessionFactory() {
         logger.debug("starting session");
         return sessionFactory;
     }
@@ -47,7 +48,11 @@ public class CustomHibernateDaoSupport<T> implements DAO<T> {
     @Override
     public void save(T entity) {
         logger.debug("initiating save query");
-        getSessionFactory().getCurrentSession().save(entity);
+        try {
+            getSessionFactory().getCurrentSession().save(entity);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -62,20 +67,24 @@ public class CustomHibernateDaoSupport<T> implements DAO<T> {
 
     /**
      * Delete query
-     * @param key - object parameter
+     * @param key - object param (id)
      */
     @Override
     public void delete(Serializable key) {
         logger.debug("initiating delete query");
         Object entity = getSessionFactory().getCurrentSession().get(clazz, key);
         if (entity != null) {
-            getSessionFactory().getCurrentSession().delete(entity);
+            try {
+                getSessionFactory().getCurrentSession().delete(entity);
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
      * Find query
-     * @param key - object parameter
+     * @param key - object param (id)
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -104,7 +113,6 @@ public class CustomHibernateDaoSupport<T> implements DAO<T> {
     public List<T> findAllByParam(final String paramName, final Object paramValue) {
         logger.debug("initiating find all by param query");
         return getSessionFactory().getCurrentSession().createCriteria(clazz)
-                .add(Restrictions.eq(paramName, paramValue))
-                .list();
+                .add(Restrictions.eq(paramName, paramValue)).list();
     }
 }

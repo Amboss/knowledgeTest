@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "RATING", catalog = "KNOWLEDGE_TEST_DB")
 public class Rating implements Serializable {
 
-    private long ratingId;
+    private Long ratingId;
 
     private Date ratingDate;
 
@@ -27,7 +27,7 @@ public class Rating implements Serializable {
      */
     public Rating() { }
 
-    public Rating(long ratingId, Date ratingDate, Integer score, Set<Task> taskList) {
+    public Rating(Long ratingId, Date ratingDate, Integer score, Set<Task> taskList) {
         this.ratingId = ratingId;
         this.ratingDate = ratingDate;
         this.score = score;
@@ -40,16 +40,16 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RATING_ID", unique = true, nullable = false)
-    public long getRatingId() {
+    public Long getRatingId() {
         return ratingId;
     }
 
-    public void setRatingId(long ratingId) {
+    public void setRatingId(Long ratingId) {
         this.ratingId = ratingId;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "RATING_DATE", nullable = false)
+    @Column(name = "RATING_DATE", nullable = true)
     public Date getRatingDate() {
         return ratingDate;
     }
@@ -58,7 +58,7 @@ public class Rating implements Serializable {
         this.ratingDate = ratingDate;
     }
 
-    @Column(name = "SCORE", nullable = false)
+    @Column(name = "SCORE", nullable = true)
     public Integer getScore() {
         return score;
     }

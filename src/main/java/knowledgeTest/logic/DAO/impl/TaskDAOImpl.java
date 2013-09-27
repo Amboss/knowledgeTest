@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Class handel's Task type Data Access Object functionality
  */
-@Repository("TaskDAO")
+@Repository("TaskDAOImpl")
 public class TaskDAOImpl extends CustomHibernateDaoSupport<Task> implements TaskDAO{
 
     public TaskDAOImpl() {

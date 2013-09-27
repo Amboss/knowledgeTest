@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "USER", catalog = "KNOWLEDGE_TEST_DB")
 public class User implements Serializable {
 
-    private long userId;
+    private Long userId;
 
     private String userName;
 
@@ -31,7 +31,7 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public User(long userId, String userName, String password, Integer access, Rating rating) {
+    public User(Long userId, String userName, String password, Integer access, Rating rating) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -45,11 +45,11 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID", unique = true, nullable = false)
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
