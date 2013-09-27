@@ -50,7 +50,6 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
      */
     @After
     public void test_delete() {
-
         //searching and deleting tested object
         User user = new User("TestUser");
         List<User> before = userDAO.findAllByParam("userName", user.getUserName());
