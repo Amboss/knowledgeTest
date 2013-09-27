@@ -23,6 +23,7 @@
 
     <!-- Spring module -->
     <import resource="classpath:/spring/spring-mvc.xml"/>
+    <import resource="classpath:/spring/spring-logging.xml"/>
 
 
 </beans>

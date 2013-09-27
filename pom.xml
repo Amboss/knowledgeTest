@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<groupId>knowledgeTest</groupId>
-	<artifactId>knowledgeTest</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-	<name>knowledgeTest</name>
-	<url>http://maven.apache.org</url>
+    <groupId>knowledgeTest</groupId>
+    <artifactId>knowledgeTest</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>knowledgeTest</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
 
@@ -34,10 +38,17 @@
         <commons-logging.version>1.1.1</commons-logging.version>
         <commons-collections.version>3.2.1</commons-collections.version>
 
-        <antlr.version>2.7.7</antlr.version>
-
         <!-- connection pool properties -->
         <bonecp.version>0.8.0-rc3</bonecp.version>
+
+        <!-- MySQL database driver -->
+        <mysql-connector-java.version>5.1.9</mysql-connector-java.version>
+        <hsqldb.version>2.2.9</hsqldb.version>
+
+        <!-- Logging properties-->
+        <log4j.version>1.2.17</log4j.version>
+
+        <antlr.version>2.7.7</antlr.version>
     </properties>
 
     <dependencies>
@@ -142,18 +153,34 @@
             <version>${commons-collections.version}</version>
         </dependency>
 
+        <!-- MySQL database driver -->
         <dependency>
-            <groupId>antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>${antlr.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
             <version>${bonecp.version}</version>
         </dependency>
 
+        <!-- Logging dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>${antlr.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -191,7 +218,6 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
                 <configuration>
-                    <!--<jettyEnvXml>src/main/resources/jetty/jetty-env.xml</jettyEnvXml>-->
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>

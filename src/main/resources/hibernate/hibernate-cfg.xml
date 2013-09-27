@@ -21,7 +21,9 @@
 
         <property name="annotatedClasses">
             <list>
-                <value>***</value>
+                <value>knowledgeTest.model.Rating</value>
+                <value>knowledgeTest.model.Task</value>
+                <value>knowledgeTest.model.User</value>
             </list>
         </property>
 

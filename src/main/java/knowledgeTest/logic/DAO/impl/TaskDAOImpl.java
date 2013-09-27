@@ -1,9 +1,17 @@
 package knowledgeTest.logic.DAO.impl;
 
 import knowledgeTest.logic.DAO.TaskDAO;
+import knowledgeTest.logic.DAO.support.CustomHibernateDaoSupport;
+import knowledgeTest.model.Task;
+import org.springframework.stereotype.Repository;
 
 /**
- * Class handel's Task DAO functionality
+ * Class handel's Task type Data Access Object functionality
  */
-public class TaskDAOImpl implements TaskDAO{
+@Repository("TaskDAO")
+public class TaskDAOImpl extends CustomHibernateDaoSupport<Task> implements TaskDAO{
+
+    public TaskDAOImpl() {
+        super(Task.class);
+    }
 }
