@@ -78,9 +78,10 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
         // asserting
         List<User> list = userDAO.findAllByParam("userName", getUserObject().getUserName());
         for (User foo : list) {
-            assertEquals("FAIL - user name must be the same", getUserObject().getUserName(), foo.getUserName());
-            assertEquals("FAIL - password must be the same", getUserObject().getPassword(), foo.getPassword());
-            assertEquals("FAIL - access must be the same", getUserObject().getAccess(), foo.getAccess());
+            if (foo.getUserName().equals(getUserObject().getUserName())) {
+                assertEquals("FAIL - password must be the same,", getUserObject().getPassword(), foo.getPassword());
+                assertEquals("FAIL - access must be the same,", getUserObject().getAccess(), foo.getAccess());
+            }
         }
     }
 
@@ -108,10 +109,15 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
         List<User> list = userDAO.findAllByParam("userName", getUserObject().getUserName());
         for (User foo : list) {
             if (foo.getUserName().equals(getUserObject().getUserName())) {
+
+                // asserting
                 User newUser = userDAO.find(foo.getUserId());
-                assertEquals("FAIL - user name must be the same", getUserObject().getUserName(), newUser.getUserName());
-                assertEquals("FAIL - password must be the same", getUserObject().getPassword(), newUser.getPassword());
-                assertEquals("FAIL - access must be the same", getUserObject().getAccess(), newUser.getAccess());
+                assertEquals("FAIL - user name must be the same,",
+                        getUserObject().getUserName(), newUser.getUserName());
+                assertEquals("FAIL - password must be the same,",
+                        getUserObject().getPassword(), newUser.getPassword());
+                assertEquals("FAIL - access must be the same,",
+                        getUserObject().getAccess(), newUser.getAccess());
             }
         }
     }
@@ -135,14 +141,18 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
             }
         }
 
+        // asserting
         List<User> after = userDAO.findAllByParam("userName", getUserObject().getUserName());
         for (User foo : after) {
-            assertEquals("FAIL - user name must be the same", getUserObject().getUserName(), foo.getUserName());
-            assertEquals("FAIL - password must be the same", newPass, foo.getPassword());
-            assertEquals("FAIL - access must be the same", (Object) 1, foo.getAccess());
+            assertEquals("FAIL - user name must be the same,", getUserObject().getUserName(), foo.getUserName());
+            assertEquals("FAIL - password must be the same,", newPass, foo.getPassword());
+            assertEquals("FAIL - access must be the same,", (Object) 1, foo.getAccess());
         }
     }
 
+    /**
+     * Testing User findAll() method
+     */
     @Test
     public void test_findAll() {
         // creating few user objects
@@ -157,7 +167,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
         assertSame("FAIL - list must contain " + size + " objects", size, list.size());
 
         // clearing DB from test Objects
-        for(User foo : list) {
+        for (User foo : list) {
             userDAO.delete(foo.getUserId());
         }
     }
