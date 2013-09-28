@@ -1,10 +1,10 @@
 package knowledgeTest.logic.service;
 
-import knowledgeTest.model.Rating;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Interface describes USER_ROLE functionality
@@ -39,16 +39,5 @@ public interface UserService {
     /**
      * Save rating of the user
      */
-    public void saveUserRating(Long userId);
-
-    /**
-     * Get rating of user by id
-     * @return Rating Object
-     */
-    public Rating getUserRatingById(Long userId);
-
-    /**
-     * Change rating date
-     */
-    public void setUserRatingDate(Long userId);
+    public void saveUserRating(Long userId, Integer score, Set<Task> taskList);
 }

@@ -1,5 +1,6 @@
 package knowledgeTest.logic.service;
 
+import knowledgeTest.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,18 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private AdminService adminService;
+
+    /*
+     * Creating User Object with params for current test
+     * (id, pass, access, rating)
+     */
+    private User getUserObject() {
+        return new User(null, "TestUser", "testPass", 0, null);
+    }
 
     /**
      * Testing createUser() method
