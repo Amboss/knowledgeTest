@@ -2,9 +2,7 @@ package knowledgeTest.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class represents rating model for User entity
@@ -20,14 +18,14 @@ public class Rating implements Serializable {
 
     private Integer score;
 
-    private Set<Task> taskList = new HashSet<>(0);
+    private List<Task> taskList = new ArrayList<>();
 
     /**
      * Rating model constructors
      */
     public Rating() { }
 
-    public Rating(Long ratingId, Date ratingDate, Integer score, Set<Task> taskList) {
+    public Rating(Long ratingId, Date ratingDate, Integer score, List<Task> taskList) {
         this.ratingId = ratingId;
         this.ratingDate = ratingDate;
         this.score = score;
@@ -71,11 +69,11 @@ public class Rating implements Serializable {
     @JoinTable(name = "RATING_TASK",
             joinColumns = { @JoinColumn(name = "TASK_ID") },
             inverseJoinColumns = { @JoinColumn(name = "RATING_ID") })
-    public Set<Task> getTaskList() {
+    public List<Task> getTaskList() {
         return taskList;
     }
 
-    public void setTaskList(Set<Task> taskList) {
+    public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
     }
 }

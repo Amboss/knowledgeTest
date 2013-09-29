@@ -47,7 +47,7 @@ public class CustomUtilImpl implements CustomUtil {
         // adding defined amount of numbers to target list
         ArrayList<Integer> targetList = new ArrayList<>();
         for (int j = 0; j < amount; j++) {
-            targetList.add(j);
+            targetList.add(arrayList.get(j));
         }
 
         return targetList;

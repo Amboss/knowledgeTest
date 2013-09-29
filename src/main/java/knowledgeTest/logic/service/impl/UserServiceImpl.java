@@ -1,6 +1,5 @@
 package knowledgeTest.logic.service.impl;
 
-import knowledgeTest.logic.DAO.RatingDAO;
 import knowledgeTest.logic.DAO.TaskDAO;
 import knowledgeTest.logic.DAO.UserDAO;
 import knowledgeTest.logic.service.UserService;
@@ -12,9 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class handel's USER_ROLE functionality
@@ -24,13 +24,15 @@ public class UserServiceImpl implements UserService {
 
     protected static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
+    private Date date = new Date();
+
+    private Timestamp timestamp = new Timestamp(date.getTime());
+
     private CustomUtil customUtil;
 
     private UserDAO userDAO;
 
     private TaskDAO taskDAO;
-
-    private RatingDAO ratingDAO;
 
     @Autowired
     public void setCustomUtil(CustomUtil customUtil) {
@@ -45,11 +47,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setTaskDAO(TaskDAO taskDAO) {
         this.taskDAO = taskDAO;
-    }
-
-    @Autowired
-    public void setRatingDAO(RatingDAO ratingDAO) {
-        this.ratingDAO = ratingDAO;
     }
 
     /**
@@ -98,7 +95,7 @@ public class UserServiceImpl implements UserService {
      * Get list of tasks
      *
      * @param amount - describes how many tasks have to be in list, can't be null or less then "1".
-     * @return List of Task objects
+     * @return List of Task objects  ;) was really fun to produce ;)
      * @throws RuntimeException
      */
     @Override
@@ -119,7 +116,7 @@ public class UserServiceImpl implements UserService {
                 customUtil.getRandomNumbers(amount, existingList.size());
 
         // adding task to target list by specified index from existingList
-        for (int i = 0; i <= randomNumberList.size(); i++) {
+        for (int i = 1; i <= randomNumberList.size(); i++) {
             targetList.add(existingList.get(randomNumberList.get(i)));
         }
 
@@ -155,7 +152,7 @@ public class UserServiceImpl implements UserService {
      * @throws RuntimeException
      */
     @Override
-    public void saveUserRating(Long userId, Integer score, Set<Task> taskList) {
+    public void saveUserRating(Long userId, Integer score, List<Task> taskList) {
         logger.debug("initiating method findTaskById()");
 
         assert userId != null : "Service Error: unable to initiate method saveUserRating(), " +
@@ -171,7 +168,7 @@ public class UserServiceImpl implements UserService {
             User user = list.get(0);
 
             // creating rating (id, date, score, taskList) and saving
-            user.setRating(new Rating(null, null, score, taskList));
+            user.setRating(new Rating(null, timestamp, score, taskList));
             userDAO.save(user);
         } else {
             throw new RuntimeException("Service Error: unable to find user with userId: " + userId);
