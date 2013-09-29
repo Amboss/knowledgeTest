@@ -1,6 +1,8 @@
 package knowledgeTest.logic.service;
 
+import knowledgeTest.model.Rating;
 import knowledgeTest.model.User;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * JUnit test for the {@link knowledgeTest.logic.service.impl.UserServiceImpl} class.
@@ -18,6 +24,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:application-context.xml"})
 @TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
+@Transactional
 public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
@@ -26,12 +33,28 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
     @Autowired
     private AdminService adminService;
 
+    private static Timestamp timestamp;
+
+    @BeforeClass
+    public static void initiate() {
+        Date date = new Date();
+        timestamp = new Timestamp(date.getTime());
+    }
+
     /*
      * Creating User Object with params for current test
      * (id, pass, access, rating)
      */
     private User getUserObject() {
         return new User(null, "TestUser", "testPass", 0, null);
+    }
+
+    /*
+    * Creating User Object with params for current test
+    * (id, ratingDate, score, taskList)
+    */
+    private Rating getRatingObject() {
+        return new Rating(null, timestamp, 20, null);
     }
 
     /**

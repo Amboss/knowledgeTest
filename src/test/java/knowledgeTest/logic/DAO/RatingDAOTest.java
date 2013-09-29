@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -24,6 +26,8 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:application-context.xml"})
+@TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
+@Transactional
 public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
@@ -39,7 +43,7 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
 
     /*
      * Creating User Object with params for current test
-     * (id = null, ratingDate = timestamp, score = 20, taskList = null)
+     * (id, ratingDate, score, taskList)
      */
     private Rating getRatingObject() {
         return new Rating(null, timestamp, 20, null);
@@ -131,6 +135,8 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
                 // asserting
                 Rating newRating = ratingDAO.find(foo.getRatingId());
                 assertEquals("FAIL - score must be the same,", (Object) 33, newRating.getScore());
+                newRating.setScore(20);
+                ratingDAO.update(newRating);
             }
         }
     }

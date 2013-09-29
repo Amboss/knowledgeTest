@@ -78,7 +78,7 @@ public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing updateUser() method   TODO
+     * Testing updateUser() method
      */
     @Test
     public void test_updateUser() {
@@ -127,7 +127,7 @@ public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing getAllUsers() method   TODO
+     * Testing getAllUsers() method
      */
     @Test
     public void test_getAllUsers() {
