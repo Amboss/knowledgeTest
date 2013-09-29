@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
         this.ratingDAO = ratingDAO;
     }
 
-
     /**
      * Find user by userName
      *
@@ -98,8 +97,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Get list of tasks
      *
-     * @param amount - describes how many tasks have to be in list,
-     *               can't be null or less then "1".
+     * @param amount - describes how many tasks have to be in list, can't be null or less then "1".
      * @return List of Task objects
      * @throws RuntimeException
      */

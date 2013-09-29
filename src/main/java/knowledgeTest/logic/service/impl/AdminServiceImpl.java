@@ -8,7 +8,6 @@ import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +19,6 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     protected static Logger logger = Logger.getLogger(AdminServiceImpl.class);
-
-    private ShaPasswordEncoder passEncoder = new ShaPasswordEncoder(256);
 
     private UserDAO userDAO;
 
@@ -62,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * Update user
      *
-     * @param user - object User must contain userName parameter to pass assertion
+     * @param user - object User must contain ID parameter to pass assertion
      * @throws RuntimeException
      */
     @Override
@@ -70,11 +67,15 @@ public class AdminServiceImpl implements AdminService {
 
         logger.debug("initiating method updateUser()");
 
-        assert user.getUserName() != null : "Service Error: unable to update user, userName is missing!";
+        assert user.getUserId() != null : "Service Error: unable to update user, user ID is missing!";
 
-        List<User> list = userDAO.findAllByParam("userName", user.getUserName());
+        List<User> list = userDAO.findAllByParam("userId", user.getUserId());
         if (list != null) {
             for (User foo : list) {
+                foo.setUserName(user.getUserName());
+                foo.setPassword(user.getPassword());
+                foo.setAccess(user.getAccess());
+                foo.setRating(user.getRating());
                 userDAO.update(foo);
             }
         } else {
@@ -98,7 +99,9 @@ public class AdminServiceImpl implements AdminService {
         List<User> list = userDAO.findAllByParam("userId", userId);
         if (list != null) {
             for (User foo : list) {
-                userDAO.delete(foo.getUserId());
+                if (foo.getUserId().equals(userId)) {
+                    userDAO.delete(userId);
+                }
             }
         } else {
             throw new RuntimeException("Service Error: unable to delete user, " +
@@ -136,14 +139,13 @@ public class AdminServiceImpl implements AdminService {
     public void createTask(Task task) {
         logger.debug("initiating method createTask()");
 
-        List list = (List) task;
-        for (Object aList : list) {
-            if (aList == null) {
-                throw new RuntimeException("Service Error: unable to initiate method createTask()," +
-                        "one of parameters are empty");
-            } else {
-                taskDAO.save(task);
-            }
+        if (task.getQuestion() == null || task.getAnswer1() == null ||
+                task.getAnswer2() == null || task.getAnswer3() == null ||
+                task.getAnswer4() == null || task.getCorrect() == null) {
+            throw new RuntimeException("Service Error: unable to initiate method createTask()," +
+                    "one of parameters are empty");
+        } else {
+            taskDAO.save(task);
         }
     }
 
@@ -157,18 +159,31 @@ public class AdminServiceImpl implements AdminService {
     public void updateTask(Task task) {
         logger.debug("initiating method updateTask()");
 
-        assert task.getTaskId() != null : "Service Error: unable to initiate method updateTask()," +
-                "task id is empty!";
-        List<Task> list = taskDAO.findAllByParam("taskId", task.getTaskId());
-        if (list != null) {
-            for (Task foo : list) {
-                taskDAO.update(foo);
-            }
+        // asserting input data of Task object
+        if (task.getTaskId() == null || task.getQuestion() == null || task.getAnswer1() == null ||
+                task.getAnswer2() == null || task.getAnswer3() == null || task.getAnswer4() == null ||
+                task.getCorrect() == null) {
+            throw new RuntimeException("Service Error: unable to initiate method updateTask()," +
+                    "one of parameters are empty");
         } else {
-            throw new RuntimeException("Service Error: unable to update task, can't find task " +
-                    "with ID: " + task.getTaskId());
-        }
 
+            // retrieving supported task object from DB
+            List<Task> list = taskDAO.findAllByParam("taskId", task.getTaskId());
+            if (list != null) {
+                for (Task foo : list) {
+                    foo.setQuestion(task.getQuestion());
+                    foo.setAnswer1(task.getAnswer1());
+                    foo.setAnswer2(task.getAnswer2());
+                    foo.setAnswer3(task.getAnswer3());
+                    foo.setAnswer4(task.getAnswer4());
+                    foo.setCorrect(task.getCorrect());
+                    taskDAO.update(foo);
+                }
+            } else {
+                throw new RuntimeException("Service Error: unable to update task, can't find task " +
+                        "with ID: " + task.getTaskId());
+            }
+        }
     }
 
     /**

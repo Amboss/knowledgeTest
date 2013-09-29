@@ -13,7 +13,7 @@
 
 
     <!-- TransactionManager configuration-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven />
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
