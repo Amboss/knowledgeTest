@@ -1,4 +1,4 @@
-package knowledgeTest.web;
+package knowledgeTest.web.validation;
 
 /**
  * User: serge

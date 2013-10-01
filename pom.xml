@@ -31,6 +31,7 @@
         <!-- Java dependencies properties-->
         <servlet.version>2.5</servlet.version>
         <cglib.version>2.2.2</cglib.version>
+        <standard.version>1.1.2</standard.version>
         <javassist.version>3.12.1.GA</javassist.version>
 
         <!-- Database access properties-->
@@ -47,7 +48,7 @@
         <hsqldb.version>2.2.9</hsqldb.version>
 
         <!-- Logging properties-->
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>1.7.5</log4j.version>
 
         <!-- Test properties-->
         <junit.version>4.11</junit.version>
@@ -154,6 +155,11 @@
             <version>${cglib.version}</version>
         </dependency>
         <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>${standard.version}</version>
+        </dependency>
+        <dependency>
             <!-- library for editing byte codes -->
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -203,7 +209,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Test dependencies -->

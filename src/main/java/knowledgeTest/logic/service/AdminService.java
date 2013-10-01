@@ -2,12 +2,14 @@ package knowledgeTest.logic.service;
 
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
+import org.springframework.security.access.annotation.Secured;
 
 import java.util.List;
 
 /**
  * Interface describes ADMIN_ROLE functionality
  */
+@Secured("ROLE_ADMIN")
 public interface AdminService {
 
     /**

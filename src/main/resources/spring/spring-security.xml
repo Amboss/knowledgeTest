@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==================================================================================================
+        Spring Security 3.1 configuration
+             - annotations="enabled"
+             - authentication-provider="customAuthenticationManager"
+             - first Entrance Of AdminHandler
+     ================================================================================================== -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/security
+                http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!-- Spring Security annotations -->
+    <security:global-method-security secured-annotations="enabled"/>
+
+    <!--  Spring Security autowire the parent property  -->
+    <security:authentication-manager alias="AuthenticationManager">
+        <security:authentication-provider ref="customAuthenticationManager"/>
+    </security:authentication-manager>
+
+    <!-- Configuration of Spring-Security. Set to false to assign custom filters  -->
+    <security:http auto-config="false"
+                   authentication-manager-ref="customAuthenticationManager"
+                   access-denied-page="/common/accessDenied.jsp"
+                   entry-point-ref="authenticationEntryPoint"
+                   use-expressions="true">
+
+        <security:form-login always-use-default-target="false"
+                             login-page="/common/loginLogout.jsp"
+                             default-target-url="/employee/monitoring"
+                             authentication-failure-url="/auth/login?error=true"/>
+
+        <security:logout logout-success-url="/home"
+                         logout-url="/j_spring_security_logout"/>
+    </security:http>
+
+    <!-- Custom authentication manager -->
+    <bean id="customAuthenticationManager"
+          class="knowledgeTest.web.security.AdminAuthentication"/>
+
+    <!-- The authentication entry point -->
+    <bean id="authenticationEntryPoint"
+          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
+          p:loginFormUrl="/auth/login"/>
+
+</beans>

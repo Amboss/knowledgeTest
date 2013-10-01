@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ==================================================================================================
         Spring Servlet Context: defines this servlet request-processing infrastructure
-        -  Application Message Bundle
+        -  application Message Bundle
+        -  viewResolver
      ================================================================================================== -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,4 +17,10 @@
           p:fileEncodings="UTF-8"
           p:fallbackToSystemLocale="false"
           p:basenames="/WEB-INF/i18n/messages"/>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp"/>
+
 </beans>

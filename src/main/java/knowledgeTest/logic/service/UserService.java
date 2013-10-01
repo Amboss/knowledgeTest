@@ -2,12 +2,14 @@ package knowledgeTest.logic.service;
 
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Interface describes USER_ROLE functionality
  */
+@Service("AnonymousServiceImpl")
 public interface UserService {
 
     /**
