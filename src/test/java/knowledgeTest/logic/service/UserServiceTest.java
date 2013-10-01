@@ -15,7 +15,9 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -70,7 +72,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
      * (id, ratingDate, score, taskList)
      */
     private Rating getRatingObject() {
-        return new Rating(null, timestamp, 20, null);
+        return new Rating(null, timestamp, 20);
     }
 
     /**
@@ -115,20 +117,22 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing getRandomListOfTasks() method        TODO
+     * Testing getRandomListOfTasks() method
      */
     @Test
     public void test_getRandomListOfTasks() {
         // creating few tasks
         List<String> questionList = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 10; i++) {
             String str = "Question" + Integer.toString(i);
             adminService.createTask(new Task(null, str, "answer1", "answer2", "answer3", "answer4", 1));
             questionList.add(str);
         }
 
         // asserting
-        List<Task> taskList = userService.getRandomListOfTasks(10);
+        Integer amount = 5;
+        List<Task> taskList = userService.getRandomListOfTasks(amount);
+        assertEquals("FAIL - taskSet must contain 5 objects", amount, (Object)taskList.size());
 
         // cleaning DB
         List<Task> listToClean = adminService.getAllTasks();
@@ -168,34 +172,32 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing saveUserRating() method       TODO
+     * Testing updateUserRating() method       TODO
      */
     @Test
-    public void test_saveUserRating() {
+    public void test_updateUserRating() {
         // creating user
         adminService.createUser(getUserObject());
+
+        // creating few tasks
+        for (int i = 1; i <= 10; i++) {
+            String str = "Question" + Integer.toString(i);
+            adminService.createTask(new Task(null, str, "answer1", "answer2", "answer3", "answer4", 1));
+        }
 
         User user = userService.findUserByUserName(getUserObject().getUserName());
         if (user != null) {
 
-            // creating few tasks
-            for (int i = 1; i <= 20; i++) {
-                String str = "Question" + Integer.toString(i);
-                adminService.createTask(new Task(null, str, "answer1", "answer2", "answer3", "answer4", 1));
-            }
-
-            List<Task> taskList = userService.getRandomListOfTasks(10);
-
             // saving rating of supported user
-            userService.saveUserRating(user.getUserId(), 5, taskList);
+            Integer score = 5;
+            userService.updateUserRating(user.getUserId(), score);
+
             // asserting
             User targetUser = userService.findUserById(user.getUserId());
             assertNotNull("FAIL - targetUsr must contain object!", targetUser);
             assertEquals("FAIL - userName must be same,", user.getUserName(), targetUser.getUserName());
             assertNotNull("FAIL - Date can't be null,", targetUser.getRating().getRatingDate());
-            assertEquals("FAIL - score must be same,",
-                    user.getRating().getScore(), targetUser.getRating().getScore());
-            assertEquals("FAIL - taskSET must be same,", taskList, targetUser.getRating().getTaskList());
+            assertEquals("FAIL - score must be same,", score, targetUser.getRating().getScore());
 
             // cleaning DB
             List<Task> listToClean = adminService.getAllTasks();

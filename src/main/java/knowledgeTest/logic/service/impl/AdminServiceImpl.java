@@ -4,6 +4,7 @@ import knowledgeTest.logic.DAO.RatingDAO;
 import knowledgeTest.logic.DAO.TaskDAO;
 import knowledgeTest.logic.DAO.UserDAO;
 import knowledgeTest.logic.service.AdminService;
+import knowledgeTest.model.Rating;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
 import org.apache.log4j.Logger;
@@ -53,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
         assert user.getUserName() != null || user.getPassword() != null :
                 "Service Error: unable to save user, userName or password is missing!";
+        user.setRating(new Rating(null, null, 0));
         userDAO.save(user);
     }
 
@@ -75,7 +77,9 @@ public class AdminServiceImpl implements AdminService {
                 foo.setUserName(user.getUserName());
                 foo.setPassword(user.getPassword());
                 foo.setAccess(user.getAccess());
-                foo.setRating(user.getRating());
+                if (user.getRating() != null) {
+                    foo.setRating(user.getRating());
+                }
                 userDAO.update(foo);
             }
         } else {
@@ -100,7 +104,10 @@ public class AdminServiceImpl implements AdminService {
         if (list != null) {
             for (User foo : list) {
                 if (foo.getUserId().equals(userId)) {
-                    userDAO.delete(userId);
+                    userDAO.delete(foo.getUserId());
+                    if (foo.getRating() != null) {
+                        ratingDAO.delete(foo.getRating().getRatingId());
+                    }
                 }
             }
         } else {

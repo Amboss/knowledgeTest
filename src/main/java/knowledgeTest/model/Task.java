@@ -42,9 +42,8 @@ public class Task {
      * Task model getter/setter with Hibernate config annotations
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "TASK_ID", unique = true, nullable = false)
-    @PrimaryKeyJoinColumn
+    @GeneratedValue
+    @Column(name = "TASK_ID")
     public Long getTaskId() {
         return taskId;
     }

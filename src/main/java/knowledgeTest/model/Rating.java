@@ -18,25 +18,22 @@ public class Rating implements Serializable {
 
     private Integer score;
 
-    private List<Task> taskList = new ArrayList<>();
-
     /**
      * Rating model constructors
      */
     public Rating() { }
 
-    public Rating(Long ratingId, Date ratingDate, Integer score, List<Task> taskList) {
+    public Rating(Long ratingId, Date ratingDate, Integer score) {
         this.ratingId = ratingId;
         this.ratingDate = ratingDate;
         this.score = score;
-        this.taskList = taskList;
     }
 
     /**
      * Rating model getter/setter with Hibernate config annotations
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "RATING_ID", unique = true, nullable = false)
     public Long getRatingId() {
         return ratingId;
@@ -63,17 +60,5 @@ public class Rating implements Serializable {
 
     public void setScore(Integer score) {
         this.score = score;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "RATING_TASK",
-            joinColumns = { @JoinColumn(name = "TASK_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "RATING_ID") })
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
     }
 }

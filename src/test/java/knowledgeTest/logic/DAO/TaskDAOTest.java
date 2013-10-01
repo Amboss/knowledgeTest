@@ -54,7 +54,7 @@ public class TaskDAOTest extends AbstractJUnit4SpringContextTests {
             }
         }
 
-        // aserting
+        // asserting
         List<Task> after = taskDAO.findAllByParam("question", task.getQuestion());
         for (Task foo : after) {
             assertNull("FAIL - task must be deleted", foo);

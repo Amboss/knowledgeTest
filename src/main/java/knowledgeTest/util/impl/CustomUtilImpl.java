@@ -37,8 +37,8 @@ public class CustomUtilImpl implements CustomUtil {
         // define ArrayList to hold Integer objects
         ArrayList<Integer> arrayList = new ArrayList<>();
 
-        for (int i = 0; i < maxRange; i++) {
-            arrayList.add(i + 1);
+        for (int i = 0; i <= maxRange - 1; i++) {
+            arrayList.add(i);
         }
 
         // shuffle list

@@ -36,7 +36,7 @@ public interface UserService {
     public Task findTaskById(Long taskId);
 
     /**
-     * Save rating of the user
+     * Update rating of the user
      */
-    public void saveUserRating(Long userId, Integer score, List<Task> taskList);
+    public void updateUserRating(Long userId, Integer score);
 }

@@ -1,5 +1,6 @@
 package knowledgeTest.logic.service.impl;
 
+import knowledgeTest.logic.DAO.RatingDAO;
 import knowledgeTest.logic.DAO.TaskDAO;
 import knowledgeTest.logic.DAO.UserDAO;
 import knowledgeTest.logic.service.UserService;
@@ -12,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class handel's USER_ROLE functionality
@@ -34,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
     private TaskDAO taskDAO;
 
+    private RatingDAO ratingDAO;
+
     @Autowired
     public void setCustomUtil(CustomUtil customUtil) {
         this.customUtil = customUtil;
@@ -47,6 +48,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setTaskDAO(TaskDAO taskDAO) {
         this.taskDAO = taskDAO;
+    }
+
+    @Autowired
+    public void setRatingDAO(RatingDAO ratingDAO) {
+        this.ratingDAO = ratingDAO;
     }
 
     /**
@@ -75,7 +81,7 @@ public class UserServiceImpl implements UserService {
      * Find user by id
      *
      * @return User Object
-     * @throws RuntimeException
+     * @throws RuntimeException     TODO
      */
     @Override
     public User findUserById(Long userId) {
@@ -95,7 +101,7 @@ public class UserServiceImpl implements UserService {
      * Get list of tasks
      *
      * @param amount - describes how many tasks have to be in list, can't be null or less then "1".
-     * @return List of Task objects  ;) was really fun to produce ;)
+     * @return List of Task objects
      * @throws RuntimeException
      */
     @Override
@@ -116,8 +122,8 @@ public class UserServiceImpl implements UserService {
                 customUtil.getRandomNumbers(amount, existingList.size());
 
         // adding task to target list by specified index from existingList
-        for (int i = 1; i <= randomNumberList.size(); i++) {
-            targetList.add(existingList.get(randomNumberList.get(i)));
+        for (Integer foo : randomNumberList) {
+            targetList.add(existingList.get(foo));
         }
 
         return targetList;
@@ -136,9 +142,9 @@ public class UserServiceImpl implements UserService {
         assert taskId != null : "Service Error: unable to initiate method " +
                 "findTaskById(), task Id is empty!";
 
-        List<Task> list = taskDAO.findAllByParam("taskId", taskId);
-        if (list != null) {
-            return list.get(0);
+        Task task = taskDAO.find(taskId);
+        if (task != null) {
+            return task;
         } else {
             throw new RuntimeException("Service Error: unable to find task with taskId: " + taskId);
         }
@@ -146,30 +152,36 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Save rating of the user
-     * @param userId - id of target user for who rating must be created
-     * @param score - result of positive answers
-     * @param taskList - list of task id that user was answering
+     *
+     * @param userId   - id of target user for who rating must be created
+     * @param score    - result of positive answers
      * @throws RuntimeException
      */
     @Override
-    public void saveUserRating(Long userId, Integer score, List<Task> taskList) {
+    public void updateUserRating(Long userId, Integer score) {
         logger.debug("initiating method findTaskById()");
 
-        assert userId != null : "Service Error: unable to initiate method saveUserRating(), " +
+        assert userId != null : "Service Error: unable to initiate method updateUserRating(), " +
                 "userId is empty!";
-        assert score != null : "Service Error: unable to initiate method saveUserRating(), " +
+        assert score != null : "Service Error: unable to initiate method updateUserRating(), " +
                 "score is empty!";
-        assert taskList != null : "Service Error: unable to initiate method saveUserRating(), " +
-                "rating task list is empty!";
 
-        List<User> list = userDAO.findAllByParam("userId", userId);
+        User user = userDAO.find(userId);
 
-        if (list != null) {
-            User user = list.get(0);
+        if (user != null) {
 
-            // creating rating (id, date, score, taskList) and saving
-            user.setRating(new Rating(null, timestamp, score, taskList));
-            userDAO.save(user);
+            if (user.getRating().getRatingId() != null) {
+                // updating rating (id, date, score, taskList)
+                Rating rating = ratingDAO.find(user.getRating().getRatingId());
+                rating.setRatingDate(timestamp);
+                rating.setScore(score);
+                ratingDAO.update(rating);
+            } else {
+
+                // creating rating (id, date, score, taskList) and saving
+                user.setRating(new Rating(null, timestamp, 0));
+                userDAO.save(user);
+            }
         } else {
             throw new RuntimeException("Service Error: unable to find user with userId: " + userId);
         }

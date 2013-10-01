@@ -53,7 +53,7 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "USER_NAME", unique = true, nullable = false)
+    @Column(name = "USER_NAME", unique = true, nullable = false, length = 100)
     public String getUserName() {
         return userName;
     }
@@ -62,7 +62,7 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    @Column(name = "PASSWORD", unique = false, nullable = false)
+    @Column(name = "PASSWORD", unique = false, nullable = false, length = 100)
     public String getPassword() {
         return password;
     }

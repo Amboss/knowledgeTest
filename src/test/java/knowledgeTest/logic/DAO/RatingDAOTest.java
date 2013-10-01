@@ -35,6 +35,8 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
 
     private static Timestamp timestamp;
 
+    private Integer score = 5;
+
     @BeforeClass
     public static void initiate() {
         Date date = new Date();
@@ -46,7 +48,8 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
      * (id, ratingDate, score, taskList)
      */
     private Rating getRatingObject() {
-        return new Rating(null, timestamp, 20, null);
+        // creating few tasks
+        return new Rating(null, timestamp, score);
     }
 
     /**
@@ -56,7 +59,7 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
     public void test_delete() {
         //searching and deleting tested object
         Rating rating = new Rating();
-        rating.setScore(20);
+        rating.setScore(score);
         List<Rating> before = ratingDAO.findAllByParam("score", rating.getScore());
         for (Rating foo : before) {
             if (foo.getScore().equals(getRatingObject().getScore())) {
@@ -67,7 +70,7 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
         // asserting
         List<Rating> after = ratingDAO.findAllByParam("score", rating.getScore());
         for (Rating foo : after) {
-            assertNull("FAIL - rating must be deleted", foo);
+            assertNull("FAIL - rating must be deleted,", foo);
         }
     }
 
@@ -98,7 +101,7 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing Rating delete() method
+     * Testing Rating find() method
      */
     @Test
     public void test_find() {
@@ -118,7 +121,7 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing Rating delete() method
+     * Testing Rating update() method
      */
     @Test
     public void test_update() {
@@ -127,29 +130,31 @@ public class RatingDAOTest extends AbstractJUnit4SpringContextTests {
 
         // asserting
         List<Rating> before = ratingDAO.findAllByParam("score", getRatingObject().getScore());
+
+        Integer newScore = 33;
         for (Rating foo : before) {
             if (foo.getScore().equals(getRatingObject().getScore())) {
-                foo.setScore(33);
+                foo.setScore(newScore);
                 ratingDAO.update(foo);
 
                 // asserting
                 Rating newRating = ratingDAO.find(foo.getRatingId());
-                assertEquals("FAIL - score must be the same,", (Object) 33, newRating.getScore());
-                newRating.setScore(20);
+                assertEquals("FAIL - score must be the same,", newScore, newRating.getScore());
+                newRating.setScore(score);
                 ratingDAO.update(newRating);
             }
         }
     }
 
     /**
-     * Testing Rating delete() method
+     * Testing Rating findAll() method
      */
     @Test
     public void test_findAll() {
         // creating few user objects
         int size = 5;
         for (int i = 0; i < size; i++) {
-            ratingDAO.save(new Rating(null, timestamp, i, null));
+            ratingDAO.save(new Rating(null, timestamp, i));
         }
 
         // asserting
