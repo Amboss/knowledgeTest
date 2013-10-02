@@ -25,26 +25,34 @@
     <!-- Configuration of Spring-Security. Set to false to assign custom filters  -->
     <security:http auto-config="false"
                    authentication-manager-ref="customAuthenticationManager"
-                   access-denied-page="/common/accessDenied.jsp"
+                   access-denied-page="/access/accessDenied.jsp"
                    entry-point-ref="authenticationEntryPoint"
                    use-expressions="true">
 
         <security:form-login always-use-default-target="false"
                              login-page="/common/loginLogout.jsp"
-                             default-target-url="/employee/monitoring"
-                             authentication-failure-url="/auth/login?error=true"/>
+                             default-target-url="/admin/adminHome"
+                             authentication-failure-url="/access/login?error=true"/>
 
-        <security:logout logout-success-url="/home"
-                         logout-url="/j_spring_security_logout"/>
+        <security:logout logout-success-url="/index" logout-url="/j_spring_security_logout"/>
     </security:http>
 
     <!-- Custom authentication manager -->
-    <bean id="customAuthenticationManager"
-          class="knowledgeTest.web.security.AdminAuthentication"/>
+    <bean id="customAuthenticationManager" class="knowledgeTest.web.security.AdminAuthentication"/>
 
-    <!-- The authentication entry point -->
+    <!-- Default failure URL -->
+    <bean id="customAuthenticationFailureHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+          p:defaultFailureUrl="/access/login?error=true"/>
+
+    <!-- Default target URL -->
+    <bean id="customAuthenticationSuccessHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+          p:defaultTargetUrl="/admin/adminHome" />
+
+    <!-- Authentication entry point -->
     <bean id="authenticationEntryPoint"
           class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
-          p:loginFormUrl="/auth/login"/>
+          p:loginFormUrl="/access/login"/>
 
 </beans>

@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
      * Find user by id
      *
      * @return User Object
-     * @throws RuntimeException     TODO
+     * @throws RuntimeException
      */
     @Override
     public User findUserById(Long userId) {

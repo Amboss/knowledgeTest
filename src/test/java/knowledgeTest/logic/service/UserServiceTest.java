@@ -172,7 +172,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
     }
 
     /**
-     * Testing updateUserRating() method       TODO
+     * Testing updateUserRating() method
      */
     @Test
     public void test_updateUserRating() {
