@@ -7,43 +7,45 @@
     <!-- ======================================================================
                             Layout definition
     ======================================================================= -->
-    <definition name="defaultLayout" template="/common/layout/defaultLayout.jsp">
-        <put-attribute name="title" value="Template"/>
-        <put-attribute name="header" value="/common/template/header.jsp"/>
-        <put-attribute name="body" value="/content/index.jsp"/>
-        <put-attribute name="footer" value="/common/template/footer.jsp"/>
+    <definition name="defaultLayout" template="/WEB-INF/jsp/common/layout/defaultLayout.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/common/template/header.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/common/template/footer.jsp"/>
+        <put-attribute name="meta" value="/WEB-INF/jsp/common/include/meta.jsp"/>
+        <put-attribute name="title"  value="" type="string"/>
+        <put-attribute name="body"   value=""/>
     </definition>
 
-    <definition name="adminLayout" template="/common/layout/adminLayout.jsp">
-        <put-attribute name="title" value="Template"/>
-        <put-attribute name="header" value="/common/template/header.jsp"/>
-        <put-attribute name="adminMenu"   value="/common/template/adminMenu.jsp"/>
-        <put-attribute name="body" value="/content/index.jsp"/>
-        <put-attribute name="footer" value="/common/template/footer.jsp"/>
+    <definition name="adminLayout" template="/WEB-INF/jsp/common/layout/adminLayout">
+        <put-attribute name="header" value="/WEB-INF/jsp/common/template/header"/>
+        <put-attribute name="adminMenu" value="/WEB-INF/jsp/common/template/adminMenu"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/common/template/footer"/>
+        <put-attribute name="meta" value="/WEB-INF/jsp/common/include/meta"/>
+        <put-attribute name="title"  value="" type="string"/>
+        <put-attribute name="body"   value=""/>
     </definition>
 
     <!-- ======================================================================
                             Test content
     ======================================================================= -->
-    <definition name="index" extends="baseLayout">
-        <put-attribute name="title"  value="Knowledge test"/>
-        <put-attribute name="body"   value="/content/index.jsp"/>
+    <definition name="index" extends="defaultLayout">
+        <put-attribute name="title"  value="Knowledge test" type="string"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/index.jsp"/>
     </definition>
-    <definition name="runTest" extends="baseLayout">
+    <definition name="runTest" extends="defaultLayout">
         <put-attribute name="title"  value="Run test"/>
-        <put-attribute name="body"   value="/content/test/runTest.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/test/runTest"/>
     </definition>
-    <definition name="pause" extends="baseLayout">
+    <definition name="pause" extends="defaultLayout">
         <put-attribute name="title"  value="Pause test"/>
-        <put-attribute name="body"   value="/content/test/pause.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/test/pause"/>
     </definition>
-    <definition name="authorisation" extends="baseLayout">
+    <definition name="authorisation" extends="defaultLayout">
         <put-attribute name="title"  value="Authorisation"/>
-        <put-attribute name="body"   value="/content/test/authorisation.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/test/authorisation"/>
     </definition>
-    <definition name="result" extends="baseLayout">
+    <definition name="result" extends="defaultLayout">
         <put-attribute name="title"  value="Result"/>
-        <put-attribute name="body"   value="/content/test/result.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/test/result"/>
     </definition>
 
     <!-- ======================================================================
@@ -51,15 +53,15 @@
     ======================================================================= -->
     <definition name="adminHome" extends="adminLayout">
         <put-attribute name="title"  value="Admin home"/>
-        <put-attribute name="body"   value="/content/admin/adminHome.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/adminHome.jsp"/>
     </definition>
     <definition name="taskManager" extends="adminLayout">
         <put-attribute name="title"  value="Task manager"/>
-        <put-attribute name="body"   value="/content/admin/taskManager.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/taskManager.jsp"/>
     </definition>
     <definition name="userManager" extends="adminLayout">
         <put-attribute name="title"  value="User manager"/>
-        <put-attribute name="body"   value="/content/admin/userManager.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/userManager.jsp"/>
     </definition>
 
 </tiles-definitions>

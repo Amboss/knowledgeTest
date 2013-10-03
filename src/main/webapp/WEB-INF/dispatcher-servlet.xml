@@ -11,7 +11,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-    <!-- Application Message Bundle -->
+    <!-- application Message Bundle -->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:defaultEncoding="UTF-8"
@@ -19,17 +19,13 @@
           p:fallbackToSystemLocale="false"
           p:basenames="/WEB-INF/i18n/messages"/>
 
-    <!--<bean id="viewResolver"-->
-          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
-          <!--p:prefix="/WEB-INF/jsp/"-->
-          <!--p:suffix=".jsp"/>-->
-
+    <!-- tiles Configuration -->
     <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.ResourceBundleViewResolver"
-          p:basename="views" />
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+          p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"/>
 
-    <bean id="tilesConfigurer"
-          class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
-          p:definitions="/WEB-INF/tiles.xml" />
+    <bean id="tilesConfiguration"
+          class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles.xml"/>
 
 </beans>

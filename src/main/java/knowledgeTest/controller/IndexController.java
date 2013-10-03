@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/index")
+@RequestMapping("/")
 public class IndexController {
 
     protected static Logger logger = Logger.getLogger(IndexController.class);
 
     /**
-     * Handles and retrieves /WEB-INF/jsp/index.jsp
+     * Handles and retrieves /WEB-INF/jsp/content/index.jsp
      * @return ModelAndView object
      */
     @RequestMapping(method = RequestMethod.GET)

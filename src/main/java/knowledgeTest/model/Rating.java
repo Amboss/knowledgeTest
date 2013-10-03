@@ -2,7 +2,7 @@ package knowledgeTest.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
 
 /**
  * Class represents rating model for User entity

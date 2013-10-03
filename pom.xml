@@ -48,7 +48,8 @@
         <hsqldb.version>2.2.9</hsqldb.version>
 
         <!-- Logging properties-->
-        <log4j.version>1.7.5</log4j.version>
+        <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
+
 
         <!-- Test properties-->
         <junit.version>4.11</junit.version>
@@ -97,6 +98,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -104,6 +110,16 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-asm</artifactId>
+            <version>3.1.4.RELEASE</version>
         </dependency>
 
         <!-- Spring Security dependencies-->
@@ -190,6 +206,16 @@
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
 
         <!-- MySQL database driver dependencies -->
         <dependency>
@@ -212,7 +238,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${log4j.version}</version>
+            <version>${slf4j-log4j12.version}</version>
+        </dependency>
+        <!-- slf4j-bridge for commons-logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-log4j12.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
@@ -258,6 +290,21 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-api</artifactId>
             <version>${tiles-jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-servlet</artifactId>
+            <version>${tiles-jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-template</artifactId>
+            <version>${tiles-jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-request-api</artifactId>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
 
