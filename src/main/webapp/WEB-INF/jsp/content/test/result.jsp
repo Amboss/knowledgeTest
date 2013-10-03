@@ -14,7 +14,7 @@
     </head>
     <body>
         <center>
-        
+               <p>This is the result page!</p>
         </center>
     </body>
 </html>

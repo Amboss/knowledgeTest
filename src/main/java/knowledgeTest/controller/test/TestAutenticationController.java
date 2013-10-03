@@ -24,6 +24,6 @@ public class TestAutenticationController extends TestAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAuthorisationPage() {
         logger.info("authorisation.jsp ");
-        return new ModelAndView("/test/authorisation.jsp");
+        return new ModelAndView("test/authorisation");
     }
 }

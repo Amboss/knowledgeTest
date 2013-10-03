@@ -57,6 +57,9 @@
 
         <!-- AntLR Parser Generator dependencies -->
         <antlr.version>2.7.7</antlr.version>
+
+        <!-- Tiles JSP support -->
+        <tiles-jsp.version>3.0.1</tiles-jsp.version>
     </properties>
 
     <dependencies>
@@ -240,7 +243,22 @@
             <version>${antlr.version}</version>
         </dependency>
 
-
+        <!-- Tiles JSP support dependencies -->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>${tiles-jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-core</artifactId>
+            <version>${tiles-jsp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-api</artifactId>
+            <version>${tiles-jsp.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

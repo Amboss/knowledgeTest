@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"  %>
 
@@ -13,8 +14,9 @@
         <title>Home</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <p>This is the homepage!</p>
-        <a href='<c:url value="/test/takeTheTest"/>'>Start test</a>
+        <center>
+            <p>This is the index page!</p>
+            <a href='<c:url value="/test/takeTheTest"/>'>Start test</a>
+        <center>
     </body>
 </html>

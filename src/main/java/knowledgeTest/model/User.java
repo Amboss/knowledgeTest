@@ -62,7 +62,7 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    @Column(name = "PASSWORD", unique = false, nullable = false, length = 100)
+    @Column(name = "PASSWORD", unique = false, nullable = true, length = 100)
     public String getPassword() {
         return password;
     }

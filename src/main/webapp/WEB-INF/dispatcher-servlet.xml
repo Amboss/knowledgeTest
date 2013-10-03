@@ -2,7 +2,8 @@
 <!-- ==================================================================================================
         Spring Servlet Context: defines this servlet request-processing infrastructure
         -  application Message Bundle
-        -  viewResolver
+        -  view Resolver
+        -  tiles Configuration
      ================================================================================================== -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -18,9 +19,17 @@
           p:fallbackToSystemLocale="false"
           p:basenames="/WEB-INF/i18n/messages"/>
 
+    <!--<bean id="viewResolver"-->
+          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+          <!--p:prefix="/WEB-INF/jsp/"-->
+          <!--p:suffix=".jsp"/>-->
+
     <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/jsp/"
-          p:suffix=".jsp"/>
+          class="org.springframework.web.servlet.view.ResourceBundleViewResolver"
+          p:basename="views" />
+
+    <bean id="tilesConfigurer"
+          class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+          p:definitions="/WEB-INF/tiles.xml" />
 
 </beans>
