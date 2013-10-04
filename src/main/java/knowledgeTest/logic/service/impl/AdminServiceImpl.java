@@ -80,6 +80,7 @@ public class AdminServiceImpl implements AdminService {
                 if (user.getRating() != null) {
                     foo.setRating(user.getRating());
                 }
+                foo.setStatus(user.getStatus());
                 userDAO.update(foo);
             }
         } else {

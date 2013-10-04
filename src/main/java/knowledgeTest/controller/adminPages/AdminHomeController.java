@@ -25,6 +25,6 @@ public class AdminHomeController extends AdminAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getAdminHomePage() {
         logger.info("adminHome.jsp ");
-        return new ModelAndView("/admin/adminHome.jsp");
+        return new ModelAndView("adminHome");
     }
 }

@@ -18,13 +18,22 @@ public class IndexController {
     protected static Logger logger = Logger.getLogger(IndexController.class);
 
     /**
-     * Handles and retrieves /WEB-INF/jsp/content/index.jsp
+     * Retrieves /WEB-INF/jsp/content/index.jsp
      * @return ModelAndView object
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
-        logger.info("index.jsp ");
+        logger.info("loading index.jsp ");
         return new ModelAndView("index");
     }
 
+    /**
+     * Handles /WEB-INF/jsp/content/index.jsp
+     * @return ModelAndView object
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView onLoginSubmit() {
+        logger.info("redirecting to authorisation.jsp ");
+        return new ModelAndView("redirect:/test/authorisation");
+    }
 }

@@ -73,6 +73,16 @@ public class AdminAuthentication extends SimpleUrlAuthenticationSuccessHandler
         }
 
         /**
+         * Checking if user account is active
+         */
+        if (user.getStatus() == 0) {
+            throw new BadCredentialsException(
+                    this.messageSource.getMessage("auth.expired", new Object [] {"status"},
+                            "Access denied", Locale.getDefault())
+            );
+        }
+
+        /**
          * Compare passwords
          * Make sure to encode the password first before comparing
          */
@@ -104,8 +114,8 @@ public class AdminAuthentication extends SimpleUrlAuthenticationSuccessHandler
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
 
         // All users are granted with ROLE_USER access by default
-//        userAccessLogger.debug("Grant ROLE_USER to this user");
-//        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        userAccessLogger.debug("Grant ROLE_USER to this user");
+        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         // Check if this user has admin access
         // interpret Integer(1) as an admin user

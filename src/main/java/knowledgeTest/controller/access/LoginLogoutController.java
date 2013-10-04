@@ -24,7 +24,7 @@ public class LoginLogoutController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
         logger.debug("Received request to show denied page");
-        return new ModelAndView("/access/login");
+        return new ModelAndView("login");
     }
 
 

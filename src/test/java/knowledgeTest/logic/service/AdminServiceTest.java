@@ -48,7 +48,7 @@ public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
      * (id, pass, access, rating)
      */
     private User getUserObject() {
-        return new User(null, "TestUser", passEncoder.encodePassword("testPass", null), 0, null);
+        return new User(null, "TestUser", passEncoder.encodePassword("testPass", null), 0, 1, null);
     }
 
     /*
@@ -99,6 +99,7 @@ public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
         assertEquals("Fail - userName must be same", userBefore.getUserName(), userAfter.getUserName());
         assertEquals("Fail - password must be same", userBefore.getPassword(), userAfter.getPassword());
         assertEquals("Fail - access must be same", userBefore.getAccess(), userAfter.getAccess());
+        assertEquals("FAIL - status must be same,", userBefore.getStatus(), userAfter.getStatus());
 
         // cleaning DB
         adminService.deleteUser(userAfter.getUserId());
@@ -135,7 +136,7 @@ public class AdminServiceTest extends AbstractJUnit4SpringContextTests {
         ArrayList<String> userNameList = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             adminService.createUser(new User(null, Integer.toString(i),
-                    passEncoder.encodePassword(Integer.toString(i), null), 0, null));
+                    passEncoder.encodePassword(Integer.toString(i), null), 0, 1, null));
             userNameList.add(Integer.toString(i));
         }
 

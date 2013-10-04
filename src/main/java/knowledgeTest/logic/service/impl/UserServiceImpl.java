@@ -155,8 +155,8 @@ public class UserServiceImpl implements UserService {
     /**
      * Save rating of the user
      *
-     * @param userId   - id of target user for who rating must be created
-     * @param score    - result of positive answers
+     * @param userId - id of target user for who rating must be created
+     * @param score  - result of positive answers
      * @throws RuntimeException
      */
     @Override
@@ -188,4 +188,23 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Service Error: unable to find user with userId: " + userId);
         }
     }
+
+    /**
+     * Create User for test
+     * @param userName - name of new user to be tested
+     */
+    @Override
+    public void createUserForTest(String userName) {
+        logger.debug("initiating method createUserForTest()");
+
+        assert userName != null : "Service Error: unable to save user, userName is missing!";
+
+        User user = new User(userName);
+        user.setPassword(null);
+        user.setAccess(0);
+        user.setStatus(1);
+        user.setRating(new Rating(null, null, 0));
+        userDAO.save(user);
+    }
 }
+

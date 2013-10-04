@@ -17,7 +17,17 @@ public class User implements Serializable {
 
     private String password;
 
+    /**
+     * 0 - USER_ROLE
+     * 1 - ADMIN_ROLE
+     */
     private Integer access;
+
+    /**
+     * 0 - disabled
+     * 1 - active
+     */
+    private Integer status;
 
     private Rating rating;
 
@@ -31,11 +41,13 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public User(Long userId, String userName, String password, Integer access, Rating rating) {
+    public User(Long userId, String userName, String password,
+                Integer access, Integer status, Rating rating) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.access = access;
+        this.status = status;
         this.rating = rating;
     }
 
@@ -80,6 +92,15 @@ public class User implements Serializable {
         this.access = access;
     }
 
+    @Column(name = "STATUS", nullable = false)
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @OneToOne(cascade = CascadeType.ALL)
     public Rating getRating() {
         return rating;
@@ -96,6 +117,7 @@ public class User implements Serializable {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", access=" + access +
+                ", status=" + status +
                 ", rating=" + rating +
                 '}';
     }

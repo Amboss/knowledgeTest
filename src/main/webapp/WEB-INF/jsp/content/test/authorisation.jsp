@@ -2,19 +2,28 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-    "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login page</title>
-        <!--link rel="stylesheet" type="text/css" media="screen" href="resources/css/style.css"/ -->
-    </head>
-    <body>
+<div class="modal" name="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <form class="modal-body" method="post">
         <center>
-             <p>This is the authorisation page!</p>
+            <h3>Please specify your name</h3>
+            <hr>
+            <form:errors cssClass="errors"/>
+            <input type="text" name="userName" placeholder="Username" autofocus>
+            <div class="control-group">
+                <div class="controls">
+                    <input class='btn btn-primary'
+                            type='submit'
+                            name='save'
+                            value='Save'
+                            style="width:150px"/>
+                    <input class="btn"
+                            data-dismiss='modal'
+                            type='submit'
+                            aria-hidden='true'
+                            name='cancel'
+                            value='Cancel' />
+                </div>
+            </div>
         </center>
-    </body>
-</html>
+     </form>
+</div>

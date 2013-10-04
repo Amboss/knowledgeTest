@@ -25,7 +25,7 @@ public class AccessDeniedController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getDeniedPage() {
         logger.debug("Received request to show denied page");
-        return new ModelAndView("/access/accessDenied");
+        return new ModelAndView("accessDenied");
 
 
 

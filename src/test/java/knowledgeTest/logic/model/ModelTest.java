@@ -25,17 +25,19 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(locations = {"classpath:application-context.xml"})
 public class ModelTest extends AbstractJUnit4SpringContextTests {
 
+    private Long id = (long) 1;
+    private String name = "TestUser";
+    private String pass = "password";
+    private Integer access = 0;
+    private Integer score = 5;
+    private Integer status = 1;
+
     /**
      * Testing User model
      */
     @Test
     public void test_user() {
 
-        Long id = (long) 1;
-        String name = "TestUser";
-        String pass = "password";
-        Integer access = 0;
-        Integer score = 5;
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
 
@@ -43,14 +45,15 @@ public class ModelTest extends AbstractJUnit4SpringContextTests {
         Rating rating = new Rating(id, timestamp, score);
 
         // creating User
-        User user = new User(id, name, pass, access, rating);
+        User user = new User(id, name, pass, access, status, rating);
 
         // asserting
         assertNotNull("Fail - user object can't be null", user);
         assertEquals("Fail - id must be same,", id, user.getUserId());
         assertEquals("Fail - name must be same,", name, user.getUserName());
         assertEquals("Fail - password must be same,", pass, user.getPassword());
-        assertEquals("Fail - password must be same,", access, user.getAccess());
+        assertEquals("Fail - access must be same,", access, user.getAccess());
+        assertEquals("Fail - status must be same,", status, user.getStatus());
         assertEquals("Fail - rating must be same", rating, user.getRating());
     }
 
@@ -85,11 +88,6 @@ public class ModelTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void test_rating() {
 
-        Long id = (long) 1;
-        String name = "TestUser";
-        String pass = "password";
-        Integer access = 0;
-        Integer score = 5;
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
 
@@ -97,7 +95,7 @@ public class ModelTest extends AbstractJUnit4SpringContextTests {
         Rating rating = new Rating(id, timestamp, score);
 
         // creating User
-        User user = new User(id, name, pass, access, rating);
+        User user = new User(id, name, pass, access, status, rating);
 
         // asserting
         assertNotNull("Fail - user object can't be null", user);

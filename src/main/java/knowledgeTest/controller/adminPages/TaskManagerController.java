@@ -25,6 +25,6 @@ public class TaskManagerController extends AdminAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getTaskManagerPage() {
         logger.info("taskManager.jsp ");
-        return new ModelAndView("/admin/taskManager.jsp");
+        return new ModelAndView("taskManager");
     }
 }

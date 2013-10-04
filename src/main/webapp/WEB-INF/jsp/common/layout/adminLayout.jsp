@@ -16,6 +16,7 @@
     <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <tiles:insertAttribute name="meta" />
+        <title><tiles:insertAttribute name="title" flush="true"/></title>
     </head>
     <body>
         <div class="container">

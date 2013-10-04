@@ -56,7 +56,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
      * (id, pass, access, rating)
      */
     private User getUserObject() {
-        return new User(null, "TestUser", passEncoder.encodePassword("testPass", null), 0, null);
+        return new User(null, "TestUser", passEncoder.encodePassword("testPass", null), 0, 1, null);
     }
 
     /*
@@ -89,6 +89,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
         assertEquals("FAIL - userName must be same", getUserObject().getUserName(), user.getUserName());
         assertEquals("FAIL - password must be same", getUserObject().getPassword(), user.getPassword());
         assertEquals("FAIL - access must be same", getUserObject().getAccess(), user.getAccess());
+        assertEquals("FAIL - status must be same", getUserObject().getStatus(), user.getStatus());
 
         // cleaning DB
         adminService.deleteUser(user.getUserId());
@@ -110,6 +111,7 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
             assertEquals("FAIL - userName must be same", getUserObject().getUserName(), user.getUserName());
             assertEquals("FAIL - password must be same", getUserObject().getPassword(), user.getPassword());
             assertEquals("FAIL - access must be same", getUserObject().getAccess(), user.getAccess());
+            assertEquals("FAIL - status must be same", getUserObject().getStatus(), user.getStatus());
 
             // cleaning DB
             adminService.deleteUser(user.getUserId());
@@ -207,5 +209,24 @@ public class UserServiceTest extends AbstractJUnit4SpringContextTests {
 
             adminService.deleteUser(user.getUserId());
         }
+    }
+
+    /**
+     * Testing createUserForTest() method
+     */
+    @Test
+    public void test_createUserForTest() {
+        // creating and saving User object
+        adminService.createUser(getUserObject());
+
+        // asserting
+        User user = userService.findUserByUserName("TestUser");
+        assertNotNull("Fail - user mast contain target object", user);
+        assertEquals("Fail - password must be same", getUserObject().getPassword(), user.getPassword());
+        assertEquals("Fail - access must be same", getUserObject().getAccess(), user.getAccess());
+        assertEquals("FAIL - status must be same", getUserObject().getStatus(), user.getStatus());
+
+        // cleaning DB
+        adminService.deleteUser(user.getUserId());
     }
 }

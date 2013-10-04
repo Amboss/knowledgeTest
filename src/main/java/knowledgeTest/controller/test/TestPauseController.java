@@ -24,6 +24,6 @@ public class TestPauseController extends TestAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getTestPausePage() {
         logger.info("pause.jsp ");
-        return new ModelAndView("/test/pause.jsp");
+        return new ModelAndView("pause");
     }
 }

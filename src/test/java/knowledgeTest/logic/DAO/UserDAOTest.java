@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * JUnit test for the {@link knowledgeTest.logic.DAO.impl.UserDAOImpl} class.
@@ -39,7 +40,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
      * (id = null, pass = testPass, access = 0, rating = null)
      */
     private User getUserObject() {
-        return new User(null, "TestUser", passwordEncoder.encodePassword("testPass", null), 0, null);
+        return new User(null, "TestUser", passwordEncoder.encodePassword("testPass", null), 0, 1, null);
     }
 
     @BeforeClass
@@ -82,6 +83,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
             if (foo.getUserName().equals(getUserObject().getUserName())) {
                 assertEquals("FAIL - password must be the same,", getUserObject().getPassword(), foo.getPassword());
                 assertEquals("FAIL - access must be the same,", getUserObject().getAccess(), foo.getAccess());
+                assertEquals("FAIL - status must be the same,", getUserObject().getStatus(), foo.getStatus());
             }
         }
     }
@@ -119,6 +121,8 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
                         getUserObject().getPassword(), newUser.getPassword());
                 assertEquals("FAIL - access must be the same,",
                         getUserObject().getAccess(), newUser.getAccess());
+                assertEquals("FAIL - status must be the same,",
+                        getUserObject().getStatus(), newUser.getStatus());
             }
         }
     }
@@ -138,6 +142,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
             if (foo.getUserName().equals(getUserObject().getUserName())) {
                 foo.setPassword(newPass);
                 foo.setAccess(1);
+                foo.setStatus(0);
                 userDAO.update(foo);
             }
         }
@@ -148,6 +153,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
             assertEquals("FAIL - user name must be the same,", getUserObject().getUserName(), foo.getUserName());
             assertEquals("FAIL - password must be the same,", newPass, foo.getPassword());
             assertEquals("FAIL - access must be the same,", (Object) 1, foo.getAccess());
+            assertEquals("FAIL - status must be the same,",(Object) 0, foo.getStatus());
         }
     }
 
@@ -160,7 +166,7 @@ public class UserDAOTest extends AbstractJUnit4SpringContextTests {
         int size = 5;
         for (int i = 0; i < size; i++) {
             userDAO.save(new User(null, "TestUser" + i,
-                    passwordEncoder.encodePassword("testPass" + i, null), 0, null));
+                    passwordEncoder.encodePassword("testPass" + i, null), 0, 1, null));
         }
 
         // asserting

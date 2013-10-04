@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class handel's custom utility methods
@@ -51,5 +53,22 @@ public class CustomUtilImpl implements CustomUtil {
         }
 
         return targetList;
+    }
+
+    /**
+     * custom Pattern matcher
+     * Validate username with regular expression
+     * @param value for validation
+     * @param regex contains pattern to match
+     * @return true valid value, false invalid value
+     */
+    @Override
+    public boolean getPatternMatch(final Object value, String regex) {
+
+        String targetValue = value.toString();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(targetValue);
+
+        return matcher.matches();
     }
 }

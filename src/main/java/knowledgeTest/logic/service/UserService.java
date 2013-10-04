@@ -41,4 +41,9 @@ public interface UserService {
      * Update rating of the user
      */
     public void updateUserRating(Long userId, Integer score);
+
+    /**
+     * Create User for test
+     */
+    public void createUserForTest(String userName);
 }

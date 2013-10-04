@@ -25,6 +25,6 @@ public class UserManagerController extends AdminAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getUserManagerPage() {
         logger.info("userManager.jsp ");
-        return new ModelAndView("/admin/userManager.jsp");
+        return new ModelAndView("userManager");
     }
 }

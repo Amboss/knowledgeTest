@@ -24,6 +24,6 @@ public class TestResultController extends TestAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getTestResultPage() {
         logger.info("result.jsp ");
-        return new ModelAndView("/test/result.jsp");
+        return new ModelAndView("result");
     }
 }
