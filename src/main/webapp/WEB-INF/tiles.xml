@@ -14,7 +14,6 @@
         <put-attribute name="title"  value="" type="string"/>
         <put-attribute name="body"   value=""/>
     </definition>
-
     <definition name="adminLayout" template="/WEB-INF/jsp/common/layout/adminLayout.jsp">
         <put-attribute name="header" value="/WEB-INF/jsp/common/template/header.jsp"/>
         <put-attribute name="adminMenu" value="/WEB-INF/jsp/common/template/adminMenu.jsp"/>
@@ -23,7 +22,6 @@
         <put-attribute name="title"  value="" type="string"/>
         <put-attribute name="body"   value=""/>
     </definition>
-
     <!-- ======================================================================
                             Test content
     ======================================================================= -->
@@ -35,10 +33,6 @@
         <put-attribute name="title"  value="Run test"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/runTest.jsp"/>
     </definition>
-    <definition name="pause" extends="defaultLayout">
-        <put-attribute name="title"  value="Pause test"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/test/pause.jsp"/>
-    </definition>
     <definition name="authorisation" extends="defaultLayout">
         <put-attribute name="title"  value="Authorisation"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/authorisation.jsp"/>
@@ -47,33 +41,41 @@
         <put-attribute name="title"  value="Result"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/result.jsp"/>
     </definition>
-
     <!-- ======================================================================
-                            Admin content
+                            Admin content  / Task
     ======================================================================= -->
-    <definition name="adminHome" extends="adminLayout">
-        <put-attribute name="title"  value="Admin home"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/adminHome.jsp"/>
-    </definition>
     <definition name="taskManager" extends="adminLayout">
         <put-attribute name="title"  value="Task manager"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/taskManager.jsp"/>
+    </definition>
+    <definition name="edit_task" extends="adminLayout">
+        <put-attribute name="title"  value="Edit task"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/edit_task.jsp"/>
+    </definition>
+    <definition name="create_task" extends="adminLayout">
+        <put-attribute name="title"  value="Create task"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/create_task.jsp"/>
+    </definition>
+    <!-- ======================================================================
+                        Admin content  / User
+    ======================================================================= -->
+    <definition name="userEdit" extends="adminLayout">
+        <put-attribute name="title"  value="User edit"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/user_edit.jsp"/>
     </definition>
     <definition name="userManager" extends="adminLayout">
         <put-attribute name="title"  value="User manager"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/userManager.jsp"/>
     </definition>
-
     <!-- ======================================================================
                             Access content
     ======================================================================= -->
-    <definition name="login" extends="adminLayout">
+    <definition name="login" extends="defaultLayout">
         <put-attribute name="title"  value="Login"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/access/login.jsp"/>
     </definition>
-    <definition name="accessDenied" extends="adminLayout">
+    <definition name="accessDenied" extends="defaultLayout">
         <put-attribute name="title"  value="Access Denied"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/access/accessDenied.jsp"/>
     </definition>
-
 </tiles-definitions>

@@ -17,7 +17,7 @@ public class UserValidation implements Validator {
 
     protected static Logger loger = Logger.getLogger(UserValidation.class);
 
-    private final String RU_ENG_PATTERN = "([a-zA-Zа-яА-Я\\s.-]+)*";
+    private final String ENG_PATTERN = "([a-zA-Z\\s.-]+)*";
 
     private User user;
 
@@ -50,14 +50,14 @@ public class UserValidation implements Validator {
              *  check for userName length
              */
             if (user.getUserName().length() > 128) {
-                errors.rejectValue("userName", "user_name.length");
+                errors.rejectValue("userName", "user_name.length", "name to long");
             }
 
             /*
              *  check userName content
              */
-            if (!util.getPatternMatch(user.getUserName(), RU_ENG_PATTERN)) {
-                errors.rejectValue("userName", "user_name.content");
+            if (!util.getPatternMatch(user.getUserName(), ENG_PATTERN)) {
+                errors.rejectValue("userName", "user_name.content", "wrong chars");
             }
         }
     }

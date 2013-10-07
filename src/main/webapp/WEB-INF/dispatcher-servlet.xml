@@ -15,9 +15,8 @@
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:defaultEncoding="UTF-8"
-          p:fileEncodings="UTF-8"
           p:fallbackToSystemLocale="false"
-          p:basenames="/WEB-INF/i18n/messages"/>
+          p:basenames="/WEB-INF/messages/messages"/>
 
     <!-- tiles Configuration -->
     <bean id="viewResolver"

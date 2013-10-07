@@ -2,12 +2,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<div class="modal" name="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal" commandName="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <form class="modal-body" method="post">
         <center>
             <h3>Please specify your name</h3>
             <hr>
-            <form:errors cssClass="errors"/>
+            <spring:bind path="user.userName">
+                <c:forEach items="${status.errorMessages}" var="error">
+                    <span class="text-error"><c:out value="${error}"/></span>
+                </c:forEach>
+            </spring:bind></br></br>
             <input type="text" name="userName" placeholder="Username" autofocus>
             <div class="control-group">
                 <div class="controls">

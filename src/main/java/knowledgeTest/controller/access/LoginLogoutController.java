@@ -12,20 +12,29 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/access/login")
+@RequestMapping("/access")
 public class LoginLogoutController {
 
     protected static Logger logger = Logger.getLogger(LoginLogoutController.class);
 
     /**
-     * Handles and retrieves /access/login.jsp
+     * Retrieves /access/login.jsp
      * @return ModelAndView object
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
         logger.debug("Received request to show denied page");
         return new ModelAndView("login");
     }
 
-
+    /**
+     * Handles and retrieves /access/accessDenied.jsp
+     * shown whenever a access denied.
+     * @return ModelAndView object
+     */
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public ModelAndView getDeniedPage() {
+        logger.debug("Received request to show denied page");
+        return new ModelAndView("accessDenied");
+    }
 }
