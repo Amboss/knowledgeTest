@@ -22,6 +22,11 @@
         <put-attribute name="title"  value="" type="string"/>
         <put-attribute name="body"   value=""/>
     </definition>
+    <definition name="modalLayout" template="/WEB-INF/jsp/common/layout/modalLayout.jsp">
+        <put-attribute name="meta" value="/WEB-INF/jsp/common/include/meta.jsp"/>
+        <put-attribute name="title"  value="" type="string"/>
+        <put-attribute name="body"   value=""/>
+    </definition>
     <!-- ======================================================================
                             Test content
     ======================================================================= -->
@@ -33,7 +38,7 @@
         <put-attribute name="title"  value="Run test"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/runTest.jsp"/>
     </definition>
-    <definition name="authorisation" extends="defaultLayout">
+    <definition name="authorisation" extends="modalLayout">
         <put-attribute name="title"  value="Authorisation"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/authorisation.jsp"/>
     </definition>
@@ -46,31 +51,27 @@
     ======================================================================= -->
     <definition name="taskManager" extends="adminLayout">
         <put-attribute name="title"  value="Task manager"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/taskManager.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/task/taskManager.jsp"/>
     </definition>
     <definition name="edit_task" extends="adminLayout">
         <put-attribute name="title"  value="Edit task"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/edit_task.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/task/edit_task.jsp"/>
     </definition>
     <definition name="create_task" extends="adminLayout">
         <put-attribute name="title"  value="Create task"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/create_task.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/task/create_task.jsp"/>
     </definition>
     <!-- ======================================================================
                         Admin content  / User
     ======================================================================= -->
-    <definition name="userEdit" extends="adminLayout">
-        <put-attribute name="title"  value="User edit"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/user_edit.jsp"/>
-    </definition>
     <definition name="userManager" extends="adminLayout">
         <put-attribute name="title"  value="User manager"/>
-        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/userManager.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/jsp/content/admin/user/userManager.jsp"/>
     </definition>
     <!-- ======================================================================
                             Access content
     ======================================================================= -->
-    <definition name="login" extends="defaultLayout">
+    <definition name="login" extends="modalLayout">
         <put-attribute name="title"  value="Login"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/access/login.jsp"/>
     </definition>

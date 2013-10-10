@@ -30,11 +30,11 @@
                    use-expressions="true">
 
         <security:form-login always-use-default-target="false"
-                             login-page="/common/loginLogout.jsp"
-                             default-target-url="/admin/adminHome"
+                             login-page="/common/login.jsp"
+                             default-target-url="/admin/userManager"
                              authentication-failure-url="/access/login?error=true"/>
 
-        <security:logout logout-success-url="/index" logout-url="/j_spring_security_logout"/>
+        <security:logout logout-success-url="/" logout-url="/j_spring_security_logout"/>
     </security:http>
 
     <!-- Custom authentication manager -->
@@ -48,7 +48,7 @@
     <!-- Default target URL -->
     <bean id="customAuthenticationSuccessHandler"
           class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
-          p:defaultTargetUrl="/admin/adminHome" />
+          p:defaultTargetUrl="/admin/userManager" />
 
     <!-- Authentication entry point -->
     <bean id="authenticationEntryPoint"

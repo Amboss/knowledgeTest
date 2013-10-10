@@ -166,7 +166,7 @@ public class TaskDAOTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void test_findAll() {
         // creating few Task objects
-        int size = 20;
+        int size = 10;
         for (int i = 0; i < size; i++) {
             taskDAO.save( new Task(null, "Question text blu blu blu" + i, "answer1" + i, "answer2" + i,
                     "answer3" + i, "answer4" + i, i));
@@ -177,8 +177,8 @@ public class TaskDAOTest extends AbstractJUnit4SpringContextTests {
         assertSame("FAIL - list must contain " + size + " objects", size, list.size());
 
         // clearing DB
-        for (Task foo : list) {
-            taskDAO.delete(foo.getTaskId());
-        }
+//        for (Task foo : list) {
+//            taskDAO.delete(foo.getTaskId());
+//        }
     }
 }

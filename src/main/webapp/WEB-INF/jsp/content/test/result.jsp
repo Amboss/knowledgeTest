@@ -5,20 +5,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<div class="">
-    <div class="">
+<div class="row-fluid">
+    <div class="span6">
         <h3>Result and statistics</h3>
-        <p>Marks : 0/20 </p>
-        <p>Total number of questions 	: 	20</p>
-        <p>Number of answered questions 	: 	0</p>
-        <p>Number of unanswered questions 	: 	20</p>
+        <p>Total number of questions: 5</p>
+        <p>Number of answered questions: {rating.score}</p>
+        <p>Number of unanswered questions: 	5 - {rating.score}</p>
     </div>
     </hr>
-    <div class="">
+    <div class="span6">
         <ul>
-            <li><a href="">Take an Another Random Test!</a></li>
             <li><a href="">Go to Home Page</a></li>
-            <li><a href=""></a></li>
         </ul>
     </div>
 </div>

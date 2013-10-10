@@ -2,19 +2,34 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-    "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login page</title>
-        <!--link rel="stylesheet" type="text/css" media="screen" href="resources/css/style.css"/ -->
-    </head>
-    <body>
+<div class="modal span3" commandName="user" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true" >
+    <form class="modal-body" method="POST" action="<c:url value='/j_spring_security_check'/>" autocomplete="off" >
         <center>
-             <p>This is the login page!</p>
+            <h3>Please login</h3>
+            <hr>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="input-large" id="j_username" name="j_username" type="text"
+                            placeholder="Username" autofocus/>
+                    <form:errors cssClass="errors"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="input-large" id="j_password" name="j_password"
+                            type="password" placeholder="Password" />
+                    <form:errors cssClass="errors"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class='btn btn-primary' type='submit' name='save'
+                          value="Sign in" style="width:150px"/>
+                    <input class="btn" data-dismiss='modal' type='submit'
+                          aria-hidden='true' name='cancel' value='Cancel' />
+                </div>
+            </div>
         </center>
-    </body>
-</html>
+    </form>
+</div>

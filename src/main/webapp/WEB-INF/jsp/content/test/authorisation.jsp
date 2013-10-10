@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <div class="modal" commandName="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-    <form class="modal-body" method="post">
+    <form class="modal-body" method="post" autocomplete="off">
         <center>
             <h3>Please specify your name</h3>
             <hr>

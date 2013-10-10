@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Handles and retrieves runTest page.
  */
 @Controller
-@Secured("ROLE_USER")
-@RequestMapping("/test/runTest/{userName}")
+@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+@RequestMapping("/test/runTest")
 public class TestRunController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestRunController.class);
@@ -31,21 +33,21 @@ public class TestRunController extends TestAbstractController {
      *
      * @return ModelAndView object with list of tasks
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/{userName}",method = RequestMethod.GET)
     public ModelAndView getTestRunPage(@PathVariable("userName") String userName,
-                                       BindingResult result) {
+                                       HttpServletRequest request) {
         logger.info("runTest.jsp ");
 
         if (userName != null) {
             ModelAndView model = new ModelAndView("runTest");
             model.addObject("tasks", userService.getRandomListOfTasks(5));
-            User user = userService.findUserByUserName(userName);
-            model.addObject("user", user);
+            model.addObject("user", userService.findUserByUserName(userName));
+            model.addObject("radioButton", new RadioBtn());
+
             return model;
         } else {
             return new ModelAndView("redirect:/test/authorisation");
         }
-
     }
 
     /**
@@ -53,7 +55,7 @@ public class TestRunController extends TestAbstractController {
      *
      * @return ModelAndView object
      */
-    @RequestMapping(value = "{score}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userName}/{score}", method = RequestMethod.POST)
     public ModelAndView onRunPageSubmit(@ModelAttribute("user")User user,
                                         @PathVariable("score")Integer score,
                                         BindingResult errors) {
@@ -64,6 +66,25 @@ public class TestRunController extends TestAbstractController {
             return new ModelAndView("redirect:/test/result/" + user.getUserId());
         } else {
             return new ModelAndView("redirect:/");
+        }
+    }
+
+    public class RadioBtn {
+
+        private Integer btn;
+
+        public RadioBtn() { }
+
+        public RadioBtn(Integer answerNum) {
+            this.btn = answerNum;
+        }
+
+        public Integer getBtn() {
+            return btn;
+        }
+
+        public void setBtn(Integer btn) {
+            this.btn = btn;
         }
     }
 }

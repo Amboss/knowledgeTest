@@ -1,4 +1,4 @@
-package knowledgeTest.controller.adminPages.user;
+package knowledgeTest.controller.adminPages.task;
 
 import knowledgeTest.controller.adminPages.AdminAbstractController;
 import knowledgeTest.logic.service.AdminService;
@@ -11,27 +11,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Handles and retrieves admin home page.
+ * Handles and retrieves admin task manager page.
  * User must be authenticated as Admin to see this page
- * 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
  */
 @Controller
 @Secured("ROLE_ADMIN")
-@RequestMapping("/admin/userManager")
-public class UserManagerController extends AdminAbstractController {
+@RequestMapping("/admin/taskManager")
+public class TaskManagerController extends AdminAbstractController {
 
-    protected static Logger logger = Logger.getLogger(UserManagerController.class);
+    protected static Logger logger = Logger.getLogger(TaskManagerController.class);
 
     @Autowired
     private AdminService adminService;
 
     /**
-     * Handles and retrieves /WEB-INF/jsp/admin/adminHome.jsp
+     * Retrieves /WEB-INF/jsp/admin/taskManager.jsp
      * @return ModelAndView object
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getAdminHomePage() {
-        logger.info("userManager.jsp ");
-        return new ModelAndView("userManager","userList", adminService.getAllUsers());
+    public ModelAndView getTaskManagerPage() {
+        logger.info("taskManager.jsp ");
+        return new ModelAndView("taskManager", "taskList", adminService.getAllTasks());
     }
 }
