@@ -15,7 +15,7 @@
 
 <div class="row-fluid">
     <h2>List of all Tasks</h1>
-    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>TaskId</th>
@@ -40,7 +40,7 @@
                         <td><c:out value="${task.answer4}"/></td>
                         <td><c:out value="${task.correct}"/></td>
                         <td><a href="<c:url value="/admin/edit_task/${task.taskId}" />" >
-                                <i class="icon-edit" ></i>&nbsp;Edit</a></td>
+                                <i class="icon-pencil" ></i>&nbsp;Edit</a></td>
                     </tr>
                 </c:forEach>
             <tbody>

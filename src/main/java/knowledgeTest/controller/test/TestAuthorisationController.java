@@ -63,4 +63,14 @@ public class TestAuthorisationController extends TestAbstractController {
             return new ModelAndView("authorisation", "user", user);
         }
     }
+
+
+    /**
+     * Action on button "Cancel" pressed.
+     * @return redirect to index page
+     */
+    @RequestMapping(params = "cancel", method = RequestMethod.POST)
+    public ModelAndView onCancel() {
+        return new ModelAndView("redirect:/");
+    }
 }

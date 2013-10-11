@@ -26,7 +26,7 @@ public class UserManagerController extends AdminAbstractController {
     private AdminService adminService;
 
     /**
-     * Handles and retrieves /WEB-INF/jsp/admin/adminHome.jsp
+     * Handles and retrieves /WEB-INF/jsp/content/admin/user/userManager.jsp
      * @return ModelAndView object
      */
     @RequestMapping(method = RequestMethod.GET)

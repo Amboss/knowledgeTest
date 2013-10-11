@@ -25,7 +25,7 @@ public class TaskManagerController extends AdminAbstractController {
     private AdminService adminService;
 
     /**
-     * Retrieves /WEB-INF/jsp/admin/taskManager.jsp
+     * Retrieves /WEB-INF/jsp/content/admin/task/taskManager.jsp
      * @return ModelAndView object
      */
     @RequestMapping(method = RequestMethod.GET)

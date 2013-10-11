@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * this class responsible for the Authorized System Access
@@ -61,25 +60,20 @@ public class AdminAuthentication extends SimpleUrlAuthenticationSuccessHandler
 
         /**
          * Init a database user object
+         *
          */
         try {
             user = userDAO.findAllByParam("userName", auth.getName()).get(0);
 
         } catch (RuntimeException e) {
-            throw new BadCredentialsException(
-                    this.messageSource.getMessage("auth.no_user", new Object [] {"userName"},
-                            "Access denied", Locale.getDefault())
-            );
+            throw new BadCredentialsException("User not located!");
         }
 
         /**
          * Checking if user account is active
          */
         if (user.getStatus() == 0) {
-            throw new BadCredentialsException(
-                    this.messageSource.getMessage("auth.expired", new Object [] {"status"},
-                            "Access denied", Locale.getDefault())
-            );
+            throw new BadCredentialsException("Permission expired!");
         }
 
         /**
@@ -87,10 +81,7 @@ public class AdminAuthentication extends SimpleUrlAuthenticationSuccessHandler
          * Make sure to encode the password first before comparing
          */
         if (!passwordEncoder.isPasswordValid(user.getPassword(), (String) auth.getCredentials(), null)) {
-            throw new BadCredentialsException(
-                    this.messageSource.getMessage("auth.wrong", new Object [] {"password"},
-                            "Access denied", Locale.getDefault())
-            );
+            throw new BadCredentialsException("Wrong password!");
         }
 
         /**
