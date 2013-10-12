@@ -18,6 +18,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Handles and retrieves admin page responsible for edit/ creation of Task
@@ -29,6 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 public class TaskEditController extends AdminAbstractController {
 
     protected static Logger logger = Logger.getLogger(TaskEditController.class);
+
+    //private List<Integer> correctMap = Arrays.asList(1, 2, 3, 4);
 
     private TaskValidation validation;
 
@@ -52,8 +56,11 @@ public class TaskEditController extends AdminAbstractController {
     public ModelAndView getTaskEditPage(@PathVariable("id") Long id) {
         logger.info("adminHome.jsp");
 
+        List<Integer> correctMap = Arrays.asList(1, 2, 3, 4);
+
         ModelAndView model = new ModelAndView("edit_task");
         model.addObject("task", userService.findTaskById(id));
+        model.addObject("correctOptions", correctMap);
         return model;
     }
 
@@ -68,7 +75,7 @@ public class TaskEditController extends AdminAbstractController {
                                          SessionStatus status, HttpServletRequest request) {
 
         logger.info("adminHome.jsp");
-
+        task.setTaskId(id);
         validation.validate(task, result);
 
         if (!result.hasErrors()) {

@@ -47,12 +47,12 @@
         <div class="control-group info">
             <label class="control-label" for="correct">Correct</label>
             <div class="controls">
-               <select path="correct">
-                   <option value="NONE" label="--- Select ---" />
-                   <option value="1" label="1" />
-                   <option value="2" label="2" />
-                   <option value="3" label="3" />
-                   <option value="4" label="4" />
+               <select name="correct">
+                   <option value="NONE"> - - select - - </option>
+                   <option value="1" >1</option>
+                   <option value="2" >2</option>
+                   <option value="3" >3</option>
+                   <option value="4" >4</option>
                <select>
                <form:errors class="text-error"/>
             </div>
