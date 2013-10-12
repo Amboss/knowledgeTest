@@ -13,47 +13,48 @@
             <label class="control-label" for="question">Question</label>
             <div class="controls">
                <input id="question" name="question" type="text" autofocus/>
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group info">
             <label class="control-label" for="answer1">Answer1</label>
             <div class="controls">
                <input id="answer1" name="answer1" type="text"/>
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group info">
             <label class="control-label" for="answer2">Answer2</label>
             <div class="controls">
                <input id="answer2" name="answer2" type="text" />
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group info">
             <label class="control-label" for="answer3">Answer3</label>
             <div class="controls">
                <input id="answer3" name="answer3" type="text"/>
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group info">
             <label class="control-label" for="answer4">Answer4</label>
             <div class="controls">
                <input id="answer4" name="answer4" type="text"/>
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group info">
             <label class="control-label" for="correct">Correct</label>
             <div class="controls">
                <select path="correct">
+                   <option value="NONE" label="--- Select ---" />
                    <option value="1" label="1" />
                    <option value="2" label="2" />
                    <option value="3" label="3" />
                    <option value="4" label="4" />
                <select>
-               <form:errors cssClass="errors"/>
+               <form:errors class="text-error"/>
             </div>
         </div>
         <div class="control-group">

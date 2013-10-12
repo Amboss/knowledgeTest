@@ -47,12 +47,11 @@
         <div class="control-group info">
             <label class="control-label" for="correct">Correct</label>
             <div class="controls">
-               <select name="correct" value="${task.correct}"/>>
-                   <option value="1"> 1</option>
-                   <option value="2"> 2</option>
-                   <option value="3"> 3</option>
-                   <option value="4"> 4</option>
-               <select>
+               <select name="correct" >
+                   <c:forEach  items="${correctOptions}" var="correct">
+                       <option value="${correct}" ${task.correct == correct ? 'selected' : ''}>${correct}</option>
+                   </c:forEach>
+               </select>
                <form:errors class="text-error"/>
             </div>
         </div>
