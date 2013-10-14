@@ -63,6 +63,8 @@
         <tiles-jsp.version>3.0.1</tiles-jsp.version>
 
         <jackson.version>1.9.13</jackson.version>
+
+        <fasterxml.jackson.version>2.2.3</fasterxml.jackson.version>
     </properties>
 
     <dependencies>
@@ -310,16 +312,32 @@
         </dependency>
 
         <!-- jackson dependencies -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.jackson</groupId>-->
+            <!--<artifactId>jackson-mapper-asl</artifactId>-->
+            <!--<version>${jackson.version}</version>-->
+        <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>org.codehaus.jackson</groupId>-->
             <!--<artifactId>jackson-core-asl</artifactId>-->
             <!--<version>${jackson.version}</version>-->
         <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
 
     </dependencies>
 

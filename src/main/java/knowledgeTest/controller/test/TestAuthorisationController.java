@@ -58,7 +58,10 @@ public class TestAuthorisationController extends TestAbstractController {
 
         if (!errors.hasErrors() && user != null) {
             userService.createUserForTest(user.getUserName());
-            return new ModelAndView("redirect:/test/runTest/" + user.getUserName());
+
+            // redirecting with useId
+            return new ModelAndView("redirect:/test/runTest/" +
+                    userService.findUserByUserName(user.getUserName()).getUserId());
         } else {
             return new ModelAndView("authorisation", "user", user);
         }

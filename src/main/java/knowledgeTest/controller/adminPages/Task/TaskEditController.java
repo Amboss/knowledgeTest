@@ -32,7 +32,7 @@ public class TaskEditController extends AdminAbstractController {
 
     protected static Logger logger = Logger.getLogger(TaskEditController.class);
 
-    //private List<Integer> correctMap = Arrays.asList(1, 2, 3, 4);
+    private List<Integer> correctMap = Arrays.asList(1, 2, 3, 4);
 
     private TaskValidation validation;
 
@@ -55,8 +55,6 @@ public class TaskEditController extends AdminAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getTaskEditPage(@PathVariable("id") Long id) {
         logger.info("adminHome.jsp");
-
-        List<Integer> correctMap = Arrays.asList(1, 2, 3, 4);
 
         ModelAndView model = new ModelAndView("edit_task");
         model.addObject("task", userService.findTaskById(id));
@@ -82,7 +80,10 @@ public class TaskEditController extends AdminAbstractController {
             adminService.updateTask(task);
             return new ModelAndView("redirect:/admin/taskManager");
         } else {
-            return new ModelAndView("edit_task", "task", task);
+            ModelAndView model = new ModelAndView("edit_task");
+            model.addObject("correctOptions", correctMap);
+            model.addObject("task", task);
+            return model;
         }
     }
 }

@@ -1,19 +1,19 @@
 package knowledgeTest.controller.test;
 
+import knowledgeTest.bean.JsonTaskModel;
 import knowledgeTest.logic.service.UserService;
+import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles and retrieves runTest page.
@@ -25,41 +25,83 @@ public class TestRunController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestRunController.class);
 
+    // numberInList / taskId
+    private List<Task> taskArrayList = new ArrayList<>();
+
     @Autowired
     private UserService userService;
 
     /**
+     * - initiating list of random tasks
+     * - returning first task;
+     * <p/>
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
      * @return ModelAndView object with list of tasks
      */
-    @RequestMapping(value = "/{userName}",method = RequestMethod.GET)
-    public ModelAndView getTestRunPage(@PathVariable("userName") String userName,
-                                       HttpServletRequest request) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ModelAndView initTest(@PathVariable("userId") Long userId) {
         logger.info("runTest.jsp ");
 
-        if (userName != null) {
-            ModelAndView model = new ModelAndView("runTest");
-            model.addObject("tasks", userService.getRandomListOfTasks(5));
-            model.addObject("user", userService.findUserByUserName(userName));
-            model.addObject("radioButton", new RadioBtn());
+        // initiating list of random tasks
+        taskArrayList = userService.getRandomListOfTasks(5);
 
-            return model;
+        // returning first task
+        return new ModelAndView("runTest", "jsonModel", setJsonTaskModel(taskArrayList.get(0), userId, 1));
+    }
+
+    /**
+     * - saving user score if it positive;
+     * - returning next task if it's number less or equals taskArrayList size;
+     * <p/>
+     * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
+     *
+     * @return ModelAndView object with list of tasks
+     */
+    @RequestMapping(value = "/{userName}/{taskNum}/{answer}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ModelAndView getNextQuestion(@PathVariable("userId") Long userId,
+                                 @PathVariable("taskNum") Integer taskNum,
+                                 @PathVariable("answer") Integer answer) {
+        logger.info("runTest.jsp ");
+
+        if (taskNum != null && answer != null && userId!= null) {
+
+            // if task number is less or equals taskArrayList size
+            if (taskNum <= taskArrayList.size() - 1) {
+
+                // saving user score
+                if (answer.equals(taskArrayList.get(taskNum).getCorrect())) {
+                    User user = userService.findUserById(userId);
+                    userService.updateUserRating(userId, user.getRating().getScore() + answer);
+                }
+
+                // returning next task
+                return new ModelAndView("runTest", "jsonModel", setJsonTaskModel(taskArrayList.get(++taskNum), userId, taskNum));
+            } else {
+                // redirecting to result page
+                return new ModelAndView("redirect:/test/result/" + userId);
+            }
         } else {
             return new ModelAndView("redirect:/test/authorisation");
         }
     }
 
     /**
+     * returning next question of quiz
+     * <p/>
      * Handles /WEB-INF/jsp/content/test/runTest.jsp
      *
      * @return ModelAndView object
      */
     @RequestMapping(value = "/{userName}/{score}", method = RequestMethod.POST)
-    public ModelAndView onRunPageSubmit(@ModelAttribute("user")User user,
-                                        @PathVariable("score")Integer score,
+    public ModelAndView onRunPageSubmit(@ModelAttribute("user") User user,
+                                        @PathVariable("score") Integer score,
                                         BindingResult errors) {
-        logger.info("runTest.jsp ");
+        logger.info("runTest.jsp");
 
         if (user != null && score != null) {
             userService.updateUserRating(user.getUserId(), score);
@@ -69,22 +111,22 @@ public class TestRunController extends TestAbstractController {
         }
     }
 
-    public class RadioBtn {
-
-        private Integer btn;
-
-        public RadioBtn() { }
-
-        public RadioBtn(Integer answerNum) {
-            this.btn = answerNum;
-        }
-
-        public Integer getBtn() {
-            return btn;
-        }
-
-        public void setBtn(Integer btn) {
-            this.btn = btn;
-        }
+    /**
+     * Method setting JsonTaskModel bean for JSON object
+     * @param task - current task to be work on;
+     * @param userId - current used Id;
+     * @param taskNum - number of current task in the list;
+     * @return JsonTaskModel object
+     */
+    protected JsonTaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum) {
+        JsonTaskModel model = new JsonTaskModel();
+        model.setUserId(userId);
+        model.setTaskNum(taskNum);
+        model.setQuestion(task.getQuestion());
+        model.setAnswer1(task.getAnswer1());
+        model.setAnswer2(task.getAnswer2());
+        model.setAnswer3(task.getAnswer3());
+        model.setAnswer4(task.getAnswer4());
+        return model;
     }
 }
