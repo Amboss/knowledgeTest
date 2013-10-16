@@ -7,11 +7,16 @@ import knowledgeTest.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,96 +30,92 @@ public class TestRunController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestRunController.class);
 
-    // numberInList / taskId
+    // list contain task for current user
     private List<Task> taskArrayList = new ArrayList<>();
 
     @Autowired
     private UserService userService;
 
     /**
+     * Initiation of runTest JSP
      * - initiating list of random tasks
-     * - returning first task;
      * <p/>
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
-     * @return ModelAndView object with list of tasks
+     * @return ModelAndView
      */
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    ModelAndView initTest(@PathVariable("userId") Long userId) {
+    public ModelAndView initTest(@PathVariable("userId") Long userId) {
         logger.info("runTest.jsp ");
 
         // initiating list of random tasks
         taskArrayList = userService.getRandomListOfTasks(5);
+        User user = new User();
+        user.setUserId(userId);
 
-        // returning first task
-        return new ModelAndView("runTest", "jsonModel", setJsonTaskModel(taskArrayList.get(0), userId, 1));
+        // initiation of runTask JSP
+        return new ModelAndView("runTest", "user", user);
     }
 
     /**
+     * retrieving task in JSON object
      * - saving user score if it positive;
-     * - returning next task if it's number less or equals taskArrayList size;
+     * - returning next task JsonTaskModel if it's number less or equals taskArrayList size;
      * <p/>
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
-     * @return ModelAndView object with list of tasks
+     * @return JsonTaskModel
      */
-    @RequestMapping(value = "/{userName}/{taskNum}/{answer}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}/{taskNum}/{answer}", method = RequestMethod.POST)
     public
     @ResponseBody
-    ModelAndView getNextQuestion(@PathVariable("userId") Long userId,
-                                 @PathVariable("taskNum") Integer taskNum,
-                                 @PathVariable("answer") Integer answer) {
+    JsonTaskModel getNextQuestion(@PathVariable("userId") Long userId,
+                                  @PathVariable("taskNum") Integer taskNum,
+                                  @PathVariable("answer") Integer answer,
+                                  HttpServletRequest request, HttpServletResponse response) {
         logger.info("runTest.jsp ");
 
-        if (taskNum != null && answer != null && userId!= null) {
+        JsonTaskModel jsonTaskModel = new JsonTaskModel();
 
-            // if task number is less or equals taskArrayList size
-            if (taskNum <= taskArrayList.size() - 1) {
+        if (userId != null) {
 
-                // saving user score
-                if (answer.equals(taskArrayList.get(taskNum).getCorrect())) {
-                    User user = userService.findUserById(userId);
-                    userService.updateUserRating(userId, user.getRating().getScore() + answer);
-                }
+            User user = userService.findUserById(userId);
 
-                // returning next task
-                return new ModelAndView("runTest", "jsonModel", setJsonTaskModel(taskArrayList.get(++taskNum), userId, taskNum));
+            /**
+             * if taskNum is null then sending first task
+             * if not null then sending next task and saving score if it is positive
+             * if taskNum value bigger then taskArrayList then redirecting to result page
+             */
+            if (taskNum == null) {
+                // sending first task
+                jsonTaskModel = setJsonTaskModel(taskArrayList.get(0), userId, 1);
+
+                // sending next task
             } else {
-                // redirecting to result page
-                return new ModelAndView("redirect:/test/result/" + userId);
+                if (taskNum <= taskArrayList.size() - 1) {
+
+                    // saving score if it is positive
+                    if (answer.equals(taskArrayList.get(taskNum).getCorrect())) {
+                        userService.updateUserRating(userId, user.getRating().getScore() + answer);
+                    }
+
+                    jsonTaskModel = setJsonTaskModel(taskArrayList.get(++taskNum), userId, taskNum);
+                } else {
+                    // redirecting to result page
+                    redirect(request, response, "/test/result/" + userId);
+                }
             }
         } else {
-            return new ModelAndView("redirect:/test/authorisation");
+            redirect(request, response, "/test/authorisation");
         }
-    }
-
-    /**
-     * returning next question of quiz
-     * <p/>
-     * Handles /WEB-INF/jsp/content/test/runTest.jsp
-     *
-     * @return ModelAndView object
-     */
-    @RequestMapping(value = "/{userName}/{score}", method = RequestMethod.POST)
-    public ModelAndView onRunPageSubmit(@ModelAttribute("user") User user,
-                                        @PathVariable("score") Integer score,
-                                        BindingResult errors) {
-        logger.info("runTest.jsp");
-
-        if (user != null && score != null) {
-            userService.updateUserRating(user.getUserId(), score);
-            return new ModelAndView("redirect:/test/result/" + user.getUserId());
-        } else {
-            return new ModelAndView("redirect:/");
-        }
+        return jsonTaskModel;
     }
 
     /**
      * Method setting JsonTaskModel bean for JSON object
-     * @param task - current task to be work on;
-     * @param userId - current used Id;
+     *
+     * @param task    - current task to be work on;
+     * @param userId  - current used Id;
      * @param taskNum - number of current task in the list;
      * @return JsonTaskModel object
      */
@@ -128,5 +129,16 @@ public class TestRunController extends TestAbstractController {
         model.setAnswer3(task.getAnswer3());
         model.setAnswer4(task.getAnswer4());
         return model;
+    }
+
+    /**
+     * customised redirect
+     */
+    public void redirect(HttpServletRequest request, HttpServletResponse response, String path) {
+        try {
+            response.sendRedirect(request.getContextPath() + path);
+        } catch (java.io.IOException e) {
+            throw new BadCredentialsException("Redirect error!");
+        }
     }
 }

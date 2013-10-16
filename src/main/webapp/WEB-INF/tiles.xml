@@ -34,7 +34,7 @@
         <put-attribute name="title"  value="Knowledge test" type="string"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/index.jsp"/>
     </definition>
-    <definition name="runTest" extends="defaultLayout">
+    <definition name="runTest" extends="modalLayout">
         <put-attribute name="title"  value="Run test"/>
         <put-attribute name="body"   value="/WEB-INF/jsp/content/test/runTest.jsp"/>
     </definition>
