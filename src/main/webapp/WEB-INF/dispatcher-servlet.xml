@@ -4,6 +4,7 @@
         -  application Message Bundle
         -  view Resolver
         -  tiles Configuration
+        -  json view
      ================================================================================================== -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -27,14 +28,4 @@
           class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
           p:definitions="/WEB-INF/tiles.xml"/>
 
-    <!--<bean id="jacksonMessageConverter"-->
-          <!--class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
-        <!--<property name="messageConverters">-->
-            <!--<list>-->
-                <!--<ref bean="jacksonMessageConverter"/>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
 </beans>

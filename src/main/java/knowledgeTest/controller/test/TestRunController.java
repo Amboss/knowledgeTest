@@ -66,7 +66,7 @@ public class TestRunController extends TestAbstractController {
      *
      * @return JsonTaskModel
      */
-    @RequestMapping(value = "/{userId}/{taskNum}/{answer}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}/{taskNum}/{answer}", method = RequestMethod.GET)
     public
     @ResponseBody
     JsonTaskModel getNextQuestion(@PathVariable("userId") Long userId,
@@ -86,7 +86,7 @@ public class TestRunController extends TestAbstractController {
              * if not null then sending next task and saving score if it is positive
              * if taskNum value bigger then taskArrayList then redirecting to result page
              */
-            if (taskNum == null) {
+            if (taskNum == 0 && answer == 0) {
                 // sending first task
                 jsonTaskModel = setJsonTaskModel(taskArrayList.get(0), userId, 1);
 
