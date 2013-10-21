@@ -1,13 +1,16 @@
 package knowledgeTest.bean;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+
 /**
  * Class represents model for JSON object, made to hold current task for Ajax request
  */
-public class JsonTaskModel {
-
-    private Integer taskNum;
+@JsonAutoDetect
+public class TaskModel {
 
     private Long userId;
+
+    private Integer taskNum;
 
     private String question;
 
@@ -19,25 +22,17 @@ public class JsonTaskModel {
 
     private String answer4;
 
-    public JsonTaskModel() {}
+    public TaskModel() {}
 
-    public JsonTaskModel(Integer taskNum, Long userId, String question,
-                         String answer1, String answer2, String answer3, String answer4) {
-        this.taskNum = taskNum;
+    public TaskModel(Long userId, Integer taskNum, String question, String answer1,
+                     String answer2, String answer3, String answer4) {
         this.userId = userId;
+        this.taskNum = taskNum;
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.answer4 = answer4;
-    }
-
-    public Integer getTaskNum() {
-        return taskNum;
-    }
-
-    public void setTaskNum(Integer taskNum) {
-        this.taskNum = taskNum;
     }
 
     public Long getUserId() {
@@ -46,6 +41,14 @@ public class JsonTaskModel {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Integer getTaskNum() {
+        return taskNum;
+    }
+
+    public void setTaskNum(Integer taskNum) {
+        this.taskNum = taskNum;
     }
 
     public String getQuestion() {

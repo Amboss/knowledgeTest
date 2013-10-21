@@ -16,54 +16,99 @@
             <li> Test will be submitted automatically if the time expired.</li>
             <li>Don't refresh the page.</li>
         </ul>
-        <input class="btn" id="tmp" type='button' value='Start test' />
+        <input class="btn btn-primary" id="tmp" type='button' value='Start test' />
     </div>
 </div>
 <hr>
 <div class="row-fluid" id="runTestArea">
     <script type="text/javascript">
+
+        var id = ${user.userId};
+        var taskNum = 0;
+        var answerNum = 0;
+        var task = null;
+
+        /*
+         * main method
+         */
         $(document).ready(function() {
-
-            var id = ${user.userId};
-            var task = 0;
-            var answer = 0;
-
             $('.btn').click(function(event) {
+                 /* Remove any divs added by the last request */
+                 $('#tmp').remove();
 
-                answer = $('input[name=answer]:checked', '#taskForm').val()
-
-                /* fire off the request to OrderController */
-                var request = $.ajax({
-                    url: id + "/" + task + "/" + answer,
-                    dataType : "json",
-                    contentType : 'application/json',
-                    type:'GET',
-                    $.getJSON('${pageContext.request.contextPath}/' + id + "/" + task + "/" + answer, function(person) {
-
-                            id = item.userId;
-                            task = item.taskNum;
-                            var answerArray = new Array(item.answer1, item.answer2, item.answer3, item.answer4);
-
-                            var questionDiv = "<div class='span6 alert alert-block'></div>";
-                            $(questionDiv).appendTo('#runTestArea');
-
-                            var questionSpan = "<span>" + jsonTaskModel.question + "</span>";
-                            $(questionSpan).appendTo(questionDiv);
-
-                            var taskForm = "<form class='span6' id='taskForm' method='post' name='radioButton' commandName='radioButton'></form>";
-                            $(taskForm).appendTo('#runTestArea');
-
-                            for (var i = 1; i <= answerArray.length; i++) {
-                                var formAnswer = "<input type='radio' path='answer' value=" + [i] + ">" + answerArray[i] + " </input>";
-                                $(formAnswer).appendTo(taskForm);
-                            }
-                            var formBtn = "<input class='btn btn-primary' type='submit' name='next' value='Next' />";
-                            $(formBtn).appendTo(taskForm);
-                        });
-                    }
-                });
+                 /* fire off the request to OrderController */
+                 sendAjax();
             });
         });
+
+        /*
+         * sending POST request with user info
+         */
+        function sendAjax() {
+
+            answerNum = $('input[name="answer"]:checked', '#taskForm').val();
+            task = { "userId": id, "taskNum": taskNum, "answerNum": answerNum };
+
+            $.ajax({
+                "type": "POST",
+                "contentType": "application/json; charset=utf-8",
+                "url": "taskModel",
+                "data": JSON.stringify(task),
+                "dataType": "json",
+                "success":
+                    function(data) {
+
+                        taskNum = data.taskNum;
+
+
+                        /* Remove any divs added by the last request */
+                        $('#runTestArea').empty();
+
+                        var answerArray = new Array(data.answer1, data.answer2, data.answer3, data.answer4);
+
+                        var questionDiv = $('<div>').attr({
+                                                'class' : 'span5 alert alert-block',
+                                                'style' : 'min-height:150px' });
+                        $(questionDiv).appendTo('#runTestArea');
+
+                        var questionSpan = $('<span>').text(data.question);
+                        $(questionSpan).appendTo(questionDiv);
+
+                        var formDiv = $('<div>').attr({'class' : 'span5 form-horizontal'});
+                            $(formDiv).appendTo('#runTestArea');
+
+                        var form = $('<form>').attr({
+                                            'class': 'control-group',
+                                            'id' : 'taskForm',
+                                            'method' : 'post',
+                                            'name' : 'radioButton',
+                                            'commandName' : 'radioButton' });
+                        $(form).appendTo(formDiv);
+
+                        for (var i = 1; i <= answerArray.length; i++) {
+                            $('form.control-group')
+                                .append("<label class='radio'><input type='radio' path='answer' name='answer'" +
+                                    "value=" + [i] + " />" + answerArray[i - 1] + "</label>");
+                        }
+
+                        var formBtn = $('<input>').attr({
+                                            'class':'btn btn-primary',
+                                            'type':'button',
+                                            'value':'Next',
+                                            'onsubmit':'sendAjax()'});
+                        $(formBtn).appendTo(formDiv);
+
+                        $('.btn').click(function(event) {
+                            answerArray = null;
+                            sendAjax();
+                        });
+                    },
+                    error:
+                        function(data, status, er) {
+                            alert("error: " + data + " status: " + status + " er:" + er);
+                        }
+            });
+        }
     </script>
 </div>
 

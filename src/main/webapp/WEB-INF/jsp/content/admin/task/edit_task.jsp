@@ -10,7 +10,7 @@
     <h3>Edit Task</h3>
     <hr>
     <form class="form-horizontal" method="post" commandName="task" autocomplete="off" >
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="question">Question</label>
             <div class="controls">
                 <input id="question" name="question" type="text" autofocus value="${task.question}"/>
@@ -21,7 +21,7 @@
                 </spring:bind>
             </div>
         </div>
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="answer1">Answer1</label>
             <div class="controls">
                 <input id="answer1" name="answer1" type="text" value="${task.answer1}"/>
@@ -32,7 +32,7 @@
                 </spring:bind>
             </div>
         </div>
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="answer2">Answer2</label>
             <div class="controls">
                <input id="answer2" name="answer2" type="text" value="${task.answer2}"/>
@@ -43,7 +43,7 @@
                 </spring:bind>
             </div>
         </div>
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="answer3">Answer3</label>
             <div class="controls">
                 <input id="answer3" name="answer3" type="text" value="${task.answer3}"/>
@@ -54,7 +54,7 @@
                 </spring:bind>
             </div>
         </div>
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="answer4">Answer4</label>
             <div class="controls">
                 <input id="answer4" name="answer4" type="text" value="${task.answer4}"/>
@@ -66,7 +66,7 @@
                 </spring:bind>
             </div>
         </div>
-        <div class="control-group info">
+        <div class="control-group">
             <label class="control-label" for="correct">Correct</label>
             <div class="controls">
                 <select name="correct" >

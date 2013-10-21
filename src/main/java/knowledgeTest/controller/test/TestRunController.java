@@ -1,6 +1,7 @@
 package knowledgeTest.controller.test;
 
-import knowledgeTest.bean.JsonTaskModel;
+import knowledgeTest.bean.RequestTask;
+import knowledgeTest.bean.TaskModel;
 import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +31,15 @@ public class TestRunController extends TestAbstractController {
     // list contain task for current user
     private List<Task> taskArrayList = new ArrayList<>();
 
+    private TaskModel taskModel = new TaskModel();
+
     @Autowired
     private UserService userService;
 
     /**
      * Initiation of runTest JSP
      * - initiating list of random tasks
-     * <p/>
+     * @param userId - path variable passed by URL and specify id of current user
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
      * @return ModelAndView
@@ -58,69 +58,70 @@ public class TestRunController extends TestAbstractController {
     }
 
     /**
-     * retrieving task in JSON object
+     * this method responses to GET request
      * - saving user score if it positive;
-     * - returning next task JsonTaskModel if it's number less or equals taskArrayList size;
-     * <p/>
+     * - returning next TaskModel if it's number less or equals taskArrayList size;
+     * @param requestTask - model to process JSON request from client
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
-     * @return JsonTaskModel
+     * @return TaskModel
      */
-    @RequestMapping(value = "/{userId}/{taskNum}/{answer}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    JsonTaskModel getNextQuestion(@PathVariable("userId") Long userId,
-                                  @PathVariable("taskNum") Integer taskNum,
-                                  @PathVariable("answer") Integer answer,
-                                  HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/taskModel", method = RequestMethod.POST)
+    public @ResponseBody TaskModel getNextQuestion(@RequestBody RequestTask requestTask,
+                              HttpServletRequest request, HttpServletResponse response) {
         logger.info("runTest.jsp ");
 
-        JsonTaskModel jsonTaskModel = new JsonTaskModel();
+        if (requestTask.getUserId() != 0) {
 
-        if (userId != null) {
-
-            User user = userService.findUserById(userId);
+            User user = userService.findUserById(requestTask.getUserId());
 
             /**
              * if taskNum is null then sending first task
              * if not null then sending next task and saving score if it is positive
              * if taskNum value bigger then taskArrayList then redirecting to result page
              */
-            if (taskNum == 0 && answer == 0) {
+            if (requestTask.getTaskNum() == 0) {
                 // sending first task
-                jsonTaskModel = setJsonTaskModel(taskArrayList.get(0), userId, 1);
+                taskModel = setJsonTaskModel(taskArrayList.get(0), requestTask.getUserId(), 1);
 
                 // sending next task
             } else {
-                if (taskNum <= taskArrayList.size() - 1) {
+                if (taskModel.getTaskNum() <= taskArrayList.size()) {
 
+                    int taskNum = requestTask.getTaskNum();
+                    int foo = user.getRating().getScore();
+                    int size = taskArrayList.size();
                     // saving score if it is positive
-                    if (answer.equals(taskArrayList.get(taskNum).getCorrect())) {
-                        userService.updateUserRating(userId, user.getRating().getScore() + answer);
-                    }
+                    if (requestTask.getAnswerNum() != null) {
+                        if (requestTask.getAnswerNum().equals(taskArrayList.get(taskNum - 1).getCorrect())) {
 
-                    jsonTaskModel = setJsonTaskModel(taskArrayList.get(++taskNum), userId, taskNum);
+                            userService.updateUserRating(requestTask.getUserId(), foo + 1);
+                        }
+                    }                 // TODO  JS error: [object Object] status: error er:Index: 5, Size: 5
+                    taskModel = setJsonTaskModel(taskArrayList.get(taskNum), requestTask.getUserId(), taskNum + 1);
                 } else {
                     // redirecting to result page
-                    redirect(request, response, "/test/result/" + userId);
+
+                    redirect(request, response, "/test/result/" + requestTask.getUserId());
+                    return null;
                 }
             }
         } else {
             redirect(request, response, "/test/authorisation");
         }
-        return jsonTaskModel;
+        return taskModel;
     }
 
     /**
-     * Method setting JsonTaskModel bean for JSON object
+     * Method setting TaskModel bean for JSON object
      *
      * @param task    - current task to be work on;
      * @param userId  - current used Id;
      * @param taskNum - number of current task in the list;
-     * @return JsonTaskModel object
+     * @return TaskModel object
      */
-    protected JsonTaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum) {
-        JsonTaskModel model = new JsonTaskModel();
+    protected TaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum) {
+        TaskModel model = new TaskModel();
         model.setUserId(userId);
         model.setTaskNum(taskNum);
         model.setQuestion(task.getQuestion());
