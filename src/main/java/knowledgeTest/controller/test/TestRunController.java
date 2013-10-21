@@ -102,10 +102,12 @@ public class TestRunController extends TestAbstractController {
                             requestTask.getUserId(), taskNum + 1, null);
                 } else {
                     // redirecting to result page   "/knowledgeTest/test/result"
-                    taskModel = setJsonTaskModel(null, null, null, "/test/result" + requestTask.getUserId());
+                    //response.setStatus(301);
+                    taskModel = setJsonTaskModel(null, null, null, "/test/result/" + requestTask.getUserId());
                 }
             }
         } else {
+            //response.setStatus(301);
             taskModel = setJsonTaskModel(null, null, null, "/test/authorisation");
         }
         return taskModel;

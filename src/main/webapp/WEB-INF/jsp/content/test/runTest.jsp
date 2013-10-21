@@ -57,11 +57,10 @@
                 "dataType": "json",
                 "success":
                     function(data) {
-                        if (data.redirect) {
-                            window.location.href = "/knowledgeTest" + data.redirect;
+                        if (data.redirectURL != null) {
+                            window.location.href = "/knowledgeTest" + data.redirectURL;
                         }
                         else {
-
                             taskNum = data.taskNum;
 
                             /* Remove any divs added by the last request */
@@ -110,10 +109,10 @@
                             });
                         }
                     },
-                    error:
-                        function(data, status, er) {
-                            alert("error: " + data + " status: " + status + " er:" + er);
-                        }
+                "error":
+                    function(data, status, er) {
+                        alert("error: " + data + " status: " + status + " er:" + er);
+                    }
             });
         }
     </script>
