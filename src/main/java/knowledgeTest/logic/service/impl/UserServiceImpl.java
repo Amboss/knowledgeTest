@@ -202,7 +202,7 @@ public class UserServiceImpl implements UserService {
         User user = new User(userName);
         user.setPassword(null);
         user.setAccess(0);
-        user.setStatus(1);
+        user.setStatus(0);
         user.setRating(new Rating(null, null, 0));
         userDAO.save(user);
     }

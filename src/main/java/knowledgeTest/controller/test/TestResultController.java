@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +30,11 @@ public class TestResultController extends TestAbstractController {
      * @return ModelAndView object
      */
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ModelAndView getTestResultPage(@PathVariable("id") Long id,
-                                          BindingResult errors) {
+    public ModelAndView getTestResultPage(@PathVariable("id") Long userId) {
         logger.info("result.jsp ");
 
-        if (id != null) {
-            User user = userService.findUserById(id);
+        if (userId != null) {
+            User user = userService.findUserById(userId);
             ModelAndView model = new ModelAndView("result");
             model.addObject("user", user);
             model.addObject("rating", user.getRating());

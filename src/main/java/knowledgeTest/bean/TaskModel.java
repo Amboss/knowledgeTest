@@ -22,10 +22,12 @@ public class TaskModel {
 
     private String answer4;
 
+    private String redirectURL;
+
     public TaskModel() {}
 
-    public TaskModel(Long userId, Integer taskNum, String question, String answer1,
-                     String answer2, String answer3, String answer4) {
+    public TaskModel(Long userId, Integer taskNum, String question,
+                     String answer1, String answer2, String answer3, String answer4, String redirectURL) {
         this.userId = userId;
         this.taskNum = taskNum;
         this.question = question;
@@ -33,6 +35,7 @@ public class TaskModel {
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.answer4 = answer4;
+        this.redirectURL = redirectURL;
     }
 
     public Long getUserId() {
@@ -89,5 +92,13 @@ public class TaskModel {
 
     public void setAnswer4(String answer4) {
         this.answer4 = answer4;
+    }
+
+    public String getRedirectURL() {
+        return redirectURL;
+    }
+
+    public void setRedirectURL(String redirectURL) {
+        this.redirectURL = redirectURL;
     }
 }

@@ -8,7 +8,6 @@ import knowledgeTest.model.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -80,34 +79,34 @@ public class TestRunController extends TestAbstractController {
              * if not null then sending next task and saving score if it is positive
              * if taskNum value bigger then taskArrayList then redirecting to result page
              */
-            if (requestTask.getTaskNum() == 0) {
+            if (requestTask.getTaskNum() == null) {
                 // sending first task
-                taskModel = setJsonTaskModel(taskArrayList.get(0), requestTask.getUserId(), 1);
+                taskModel = setJsonTaskModel(taskArrayList.get(0), requestTask.getUserId(), 0, null);
 
                 // sending next task
             } else {
-                if (taskModel.getTaskNum() <= taskArrayList.size()) {
+                if (taskModel.getTaskNum() < taskArrayList.size() - 1) {
 
                     int taskNum = requestTask.getTaskNum();
                     int foo = user.getRating().getScore();
-                    int size = taskArrayList.size();
+
                     // saving score if it is positive
                     if (requestTask.getAnswerNum() != null) {
-                        if (requestTask.getAnswerNum().equals(taskArrayList.get(taskNum - 1).getCorrect())) {
+                        if (requestTask.getAnswerNum().equals(taskArrayList.get(taskNum).getCorrect())) {
 
                             userService.updateUserRating(requestTask.getUserId(), foo + 1);
                         }
-                    }                 // TODO  JS error: [object Object] status: error er:Index: 5, Size: 5
-                    taskModel = setJsonTaskModel(taskArrayList.get(taskNum), requestTask.getUserId(), taskNum + 1);
+                    }
+                    // sending task with index 1, 2, 3, 4
+                    taskModel = setJsonTaskModel(taskArrayList.get(taskNum + 1),
+                            requestTask.getUserId(), taskNum + 1, null);
                 } else {
-                    // redirecting to result page
-
-                    redirect(request, response, "/test/result/" + requestTask.getUserId());
-                    return null;
+                    // redirecting to result page   "/knowledgeTest/test/result"
+                    taskModel = setJsonTaskModel(null, null, null, "/test/result" + requestTask.getUserId());
                 }
             }
         } else {
-            redirect(request, response, "/test/authorisation");
+            taskModel = setJsonTaskModel(null, null, null, "/test/authorisation");
         }
         return taskModel;
     }
@@ -118,28 +117,30 @@ public class TestRunController extends TestAbstractController {
      * @param task    - current task to be work on;
      * @param userId  - current used Id;
      * @param taskNum - number of current task in the list;
+     * @param redirect - specified as URL if redirect must be maid on client side
      * @return TaskModel object
      */
-    protected TaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum) {
+    protected TaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum, String redirect) {
+
         TaskModel model = new TaskModel();
         model.setUserId(userId);
         model.setTaskNum(taskNum);
-        model.setQuestion(task.getQuestion());
-        model.setAnswer1(task.getAnswer1());
-        model.setAnswer2(task.getAnswer2());
-        model.setAnswer3(task.getAnswer3());
-        model.setAnswer4(task.getAnswer4());
-        return model;
-    }
 
-    /**
-     * customised redirect
-     */
-    public void redirect(HttpServletRequest request, HttpServletResponse response, String path) {
-        try {
-            response.sendRedirect(request.getContextPath() + path);
-        } catch (java.io.IOException e) {
-            throw new BadCredentialsException("Redirect error!");
+        if (task != null) {
+            model.setQuestion(task.getQuestion());
+            model.setAnswer1(task.getAnswer1());
+            model.setAnswer2(task.getAnswer2());
+            model.setAnswer3(task.getAnswer3());
+            model.setAnswer4(task.getAnswer4());
+        } else {
+            model.setQuestion(null);
+            model.setAnswer1(null);
+            model.setAnswer2(null);
+            model.setAnswer3(null);
+            model.setAnswer4(null);
         }
+
+        model.setRedirectURL(redirect);
+        return model;
     }
 }

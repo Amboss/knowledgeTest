@@ -10,14 +10,10 @@
 <div class="row-fluid">
     <div class="span6">
         <h3>Result and statistics</h3>
+        <p>User name: <c:out value="${user.userName}"/></p>
         <p>Total number of questions: 5</p>
-        <p>Number of answered questions: {rating.score}</p>
-        <p>Number of unanswered questions: 	5 - {rating.score}</p>
+        <p>Number of answered questions: <c:out value="${rating.score}"/></p>
+        <p>Number of unanswered questions: 	 <c:out value=" ${5 - rating.score}"/></p>
     </div>
     </hr>
-    <div class="span6">
-        <ul>
-            <li><a href="">Go to Home Page</a></li>
-        </ul>
-    </div>
 </div>

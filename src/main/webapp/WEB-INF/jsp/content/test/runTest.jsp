@@ -13,7 +13,7 @@
         <h3>Note:</h3>
         <ul>
             <li>Click the 'Next' button given in the bottom of this page to Submit your answer.</li>
-            <li> Test will be submitted automatically if the time expired.</li>
+            <li>Test will be submitted automatically if 3 minutes will expire.</li>
             <li>Don't refresh the page.</li>
         </ul>
         <input class="btn btn-primary" id="tmp" type='button' value='Start test' />
@@ -24,8 +24,8 @@
     <script type="text/javascript">
 
         var id = ${user.userId};
-        var taskNum = 0;
-        var answerNum = 0;
+        var taskNum = null;
+        var answerNum = null;
         var task = null;
 
         /*
@@ -57,51 +57,58 @@
                 "dataType": "json",
                 "success":
                     function(data) {
-
-                        taskNum = data.taskNum;
-
-
-                        /* Remove any divs added by the last request */
-                        $('#runTestArea').empty();
-
-                        var answerArray = new Array(data.answer1, data.answer2, data.answer3, data.answer4);
-
-                        var questionDiv = $('<div>').attr({
-                                                'class' : 'span5 alert alert-block',
-                                                'style' : 'min-height:150px' });
-                        $(questionDiv).appendTo('#runTestArea');
-
-                        var questionSpan = $('<span>').text(data.question);
-                        $(questionSpan).appendTo(questionDiv);
-
-                        var formDiv = $('<div>').attr({'class' : 'span5 form-horizontal'});
-                            $(formDiv).appendTo('#runTestArea');
-
-                        var form = $('<form>').attr({
-                                            'class': 'control-group',
-                                            'id' : 'taskForm',
-                                            'method' : 'post',
-                                            'name' : 'radioButton',
-                                            'commandName' : 'radioButton' });
-                        $(form).appendTo(formDiv);
-
-                        for (var i = 1; i <= answerArray.length; i++) {
-                            $('form.control-group')
-                                .append("<label class='radio'><input type='radio' path='answer' name='answer'" +
-                                    "value=" + [i] + " />" + answerArray[i - 1] + "</label>");
+                        if (data.redirect) {
+                            window.location.href = "/knowledgeTest" + data.redirect;
                         }
+                        else {
 
-                        var formBtn = $('<input>').attr({
-                                            'class':'btn btn-primary',
-                                            'type':'button',
-                                            'value':'Next',
-                                            'onsubmit':'sendAjax()'});
-                        $(formBtn).appendTo(formDiv);
+                            taskNum = data.taskNum;
 
-                        $('.btn').click(function(event) {
+                            /* Remove any divs added by the last request */
+                            $('#runTestArea').empty();
                             answerArray = null;
-                            sendAjax();
-                        });
+                            var answerArray = new Array(data.answer1, data.answer2, data.answer3, data.answer4);
+
+                            var questionDiv = $('<div>').attr({
+                                                    'class' : 'span5 alert alert-block',
+                                                    'style' : 'min-height:150px' });
+                            $(questionDiv).appendTo('#runTestArea');
+
+                            var questionSpan = $('<span>').text(data.question);
+                            $(questionSpan).appendTo(questionDiv);
+
+                            var formDiv = $('<div>').attr({'class' : 'span5 form-horizontal'});
+                                $(formDiv).appendTo('#runTestArea');
+
+                            var form = $('<form>').attr({
+                                                'class': 'control-group',
+                                                'id' : 'taskForm',
+                                                'method' : 'post',
+                                                'name' : 'radioButton',
+                                                'commandName' : 'radioButton' });
+                            $(form).appendTo(formDiv);
+
+                            for (var i = 1; i <= answerArray.length; i++) {
+                                $('form.control-group')
+                                    .append("<label class='radio'><input type='radio' path='answer' name='answer'" +
+                                        "value=" + [i] + " />" + answerArray[i - 1] + "</label>");
+                            }
+
+                            var formBtn = $('<input>').attr({
+                                                'class':'btn btn-primary',
+                                                'type':'button',
+                                                'value':'Next',
+                                                'style' : 'width:150px',
+                                                'onsubmit':'sendAjax()'});
+                            $(formBtn).appendTo(formDiv);
+
+                            setInterval(sendAjax, 180000);
+
+                            $('.btn').click(function(event) {
+                                 /* fire off the request to OrderController */
+                                 sendAjax();
+                            });
+                        }
                     },
                     error:
                         function(data, status, er) {
