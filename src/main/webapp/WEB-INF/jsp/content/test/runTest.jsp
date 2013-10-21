@@ -13,7 +13,7 @@
         <h3>Note:</h3>
         <ul>
             <li>Click the 'Next' button given in the bottom of this page to Submit your answer.</li>
-            <li>Test will be submitted automatically if 3 minutes will expire.</li>
+            <li>Test will be submitted automatically if 30 seconds will expire.</li>
             <li>Don't refresh the page.</li>
         </ul>
         <input class="btn btn-primary" id="tmp" type='button' value='Start test' />
@@ -101,7 +101,8 @@
                                                 'onsubmit':'sendAjax()'});
                             $(formBtn).appendTo(formDiv);
 
-                            setInterval(sendAjax, 180000);
+                            /* setting timer for 30 seconds */
+                            setInterval(sendAjax, 30000);
 
                             $('.btn').click(function(event) {
                                  /* fire off the request to OrderController */

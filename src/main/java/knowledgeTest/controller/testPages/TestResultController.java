@@ -1,4 +1,4 @@
-package knowledgeTest.controller.test;
+package knowledgeTest.controller.testPages;
 
 import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.User;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/test/result")
+@RequestMapping("/testPages/result")
 public class TestResultController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestResultController.class);
@@ -40,7 +40,7 @@ public class TestResultController extends TestAbstractController {
             model.addObject("rating", user.getRating());
             return model;
         } else {
-            return new ModelAndView("redirect:/test/authorisation");
+            return new ModelAndView("redirect:/testPages/authorisation");
         }
     }
 }

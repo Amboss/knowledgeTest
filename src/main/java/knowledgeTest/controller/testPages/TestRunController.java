@@ -1,4 +1,4 @@
-package knowledgeTest.controller.test;
+package knowledgeTest.controller.testPages;
 
 import knowledgeTest.bean.RequestTask;
 import knowledgeTest.bean.TaskModel;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/test/runTest")
+@RequestMapping("/testPages/runTest")
 public class TestRunController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestRunController.class);
@@ -66,8 +64,7 @@ public class TestRunController extends TestAbstractController {
      * @return TaskModel
      */
     @RequestMapping(value = "/taskModel", method = RequestMethod.POST)
-    public @ResponseBody TaskModel getNextQuestion(@RequestBody RequestTask requestTask,
-                              HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody TaskModel getNextQuestion(@RequestBody RequestTask requestTask) {
         logger.info("runTest.jsp ");
 
         if (requestTask.getUserId() != 0) {
@@ -101,14 +98,13 @@ public class TestRunController extends TestAbstractController {
                     taskModel = setJsonTaskModel(taskArrayList.get(taskNum + 1),
                             requestTask.getUserId(), taskNum + 1, null);
                 } else {
-                    // redirecting to result page   "/knowledgeTest/test/result"
-                    //response.setStatus(301);
-                    taskModel = setJsonTaskModel(null, null, null, "/test/result/" + requestTask.getUserId());
+                    // redirecting to result page
+                    taskModel = setJsonTaskModel(null, null, null, "/testPages/result/" + requestTask.getUserId());
                 }
             }
         } else {
-            //response.setStatus(301);
-            taskModel = setJsonTaskModel(null, null, null, "/test/authorisation");
+            // redirecting to authorisation page
+            taskModel = setJsonTaskModel(null, null, null, "/testPages/authorisation");
         }
         return taskModel;
     }

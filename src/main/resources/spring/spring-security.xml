@@ -25,7 +25,6 @@
     <!-- Configuration of Spring-Security. Set to false to assign custom filters  -->
     <security:http auto-config="false"
                    authentication-manager-ref="customAuthenticationManager"
-                   access-denied-page="/access/accessDenied.jsp"
                    entry-point-ref="authenticationEntryPoint"
                    use-expressions="true">
 

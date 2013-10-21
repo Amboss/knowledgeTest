@@ -1,4 +1,4 @@
-package knowledgeTest.controller.test;
+package knowledgeTest.controller.testPages;
 
 import knowledgeTest.logic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
