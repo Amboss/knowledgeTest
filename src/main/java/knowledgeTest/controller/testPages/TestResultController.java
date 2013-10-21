@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/testPages/result")
+@RequestMapping("/test/result")
 public class TestResultController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestResultController.class);
@@ -40,7 +40,7 @@ public class TestResultController extends TestAbstractController {
             model.addObject("rating", user.getRating());
             return model;
         } else {
-            return new ModelAndView("redirect:/testPages/authorisation");
+            return new ModelAndView("redirect:/test/authorisation");
         }
     }
 }

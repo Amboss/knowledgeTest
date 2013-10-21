@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/testPages/runTest")
+@RequestMapping("/test/runTest")
 public class TestRunController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestRunController.class);
@@ -99,12 +99,12 @@ public class TestRunController extends TestAbstractController {
                             requestTask.getUserId(), taskNum + 1, null);
                 } else {
                     // redirecting to result page
-                    taskModel = setJsonTaskModel(null, null, null, "/testPages/result/" + requestTask.getUserId());
+                    taskModel = setJsonTaskModel(null, null, null, "/test/result/" + requestTask.getUserId());
                 }
             }
         } else {
             // redirecting to authorisation page
-            taskModel = setJsonTaskModel(null, null, null, "/testPages/authorisation");
+            taskModel = setJsonTaskModel(null, null, null, "/test/authorisation");
         }
         return taskModel;
     }

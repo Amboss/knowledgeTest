@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-@RequestMapping("/testPages/authorisation")
+@RequestMapping("/test/authorisation")
 public class TestAuthorisationController extends TestAbstractController {
 
     protected static Logger logger = Logger.getLogger(TestAuthorisationController.class);
@@ -60,7 +60,7 @@ public class TestAuthorisationController extends TestAbstractController {
             userService.createUserForTest(user.getUserName());
 
             // redirecting with useId
-            return new ModelAndView("redirect:/testPages/runTest/" +
+            return new ModelAndView("redirect:/test/runTest/" +
                     userService.findUserByUserName(user.getUserName()).getUserId());
         } else {
             return new ModelAndView("authorisation", "user", user);

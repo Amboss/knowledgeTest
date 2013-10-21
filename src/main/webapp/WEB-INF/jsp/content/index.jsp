@@ -7,7 +7,7 @@
         <h3>Knowledge test</h3>
         <ul>
             <li>Total number of questions : 5</li>
-            <li>Time allowed : 3 minutes per question.</li>
+            <li>Time allowed : 30 seconds per question.</li>
             <li>Each question carry 4 answers, one of them is correct.</li>
         </ul>
         <h4>Press start to begin</h4>
