@@ -4,7 +4,7 @@ import knowledgeTest.controller.adminPages.AdminAbstractController;
 import knowledgeTest.logic.service.AdminService;
 import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.Task;
-import knowledgeTest.web.validation.TaskValidation;
+import knowledgeTest.components.validation.TaskValidation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;

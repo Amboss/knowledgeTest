@@ -37,7 +37,7 @@
     </security:http>
 
     <!-- Custom authentication manager -->
-    <bean id="customAuthenticationManager" class="knowledgeTest.web.security.AdminAuthentication"/>
+    <bean id="customAuthenticationManager" class="knowledgeTest.components.security.AdminAuthentication"/>
 
     <!-- Default failure URL -->
     <bean id="customAuthenticationFailureHandler"

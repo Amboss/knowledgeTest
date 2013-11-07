@@ -1,7 +1,7 @@
-package knowledgeTest.web.validation;
+package knowledgeTest.components.validation;
 
 import knowledgeTest.model.User;
-import knowledgeTest.util.CustomUtil;
+import knowledgeTest.components.util.CustomUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

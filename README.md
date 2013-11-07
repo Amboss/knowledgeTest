@@ -83,5 +83,16 @@ fill in user name: <b>admin</b> and password <b>admin</b></p>
 <h3>JUnit Testing:</h3>
 <p>Because testing was not specified in the task, test cases was made for main functionality: DAO, service, util.</p>
 
+<hr>
+<h3>customer remarks</h3>
+<ul>
+<li>1. Нет скрипта создания БД.</li>
+<li>2. БД предполагает что количество вариантов ответов 5. Это противоречит задаче.</li>
+<li>3. Java Code Convention.</li>
+<li>4. Система написана не интуитивно понятно (большое количество пакетов и классов с не очень понятным назначением, например,
+сущность Task и связанная с ней логика, "admin home page" и т.д.).</li>
+<li>5. Система с высокой вероятностью будет работать некорректно в многопользовательском режиме (хранение состояния в контроллере).</li>
+<li>6. Нарушение принципа MVC (логика в контроллере).</li>
+<ul>
 
 

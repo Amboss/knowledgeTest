@@ -1,7 +1,7 @@
 package knowledgeTest.controller.testPages;
 
-import knowledgeTest.bean.RequestTask;
-import knowledgeTest.bean.TaskModel;
+import knowledgeTest.model.JsonRequestTask;
+import knowledgeTest.model.JsonTaskModel;
 import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
@@ -17,6 +17,9 @@ import java.util.List;
 
 /**
  * Handles and retrieves runTest page.
+ *
+ * TODO - save state in session;
+ * TODO - remove logic from controller;
  */
 @Controller
 @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
@@ -28,7 +31,7 @@ public class TestRunController extends TestAbstractController {
     // list contain task for current user
     private List<Task> taskArrayList = new ArrayList<>();
 
-    private TaskModel taskModel = new TaskModel();
+    private JsonTaskModel taskModel = new JsonTaskModel();
 
     @Autowired
     private UserService userService;
@@ -57,14 +60,15 @@ public class TestRunController extends TestAbstractController {
     /**
      * this method responses to GET request
      * - saving user score if it positive;
-     * - returning next TaskModel if it's number less or equals taskArrayList size;
+     * - returning next JsonTaskModel if it's number less or equals taskArrayList size;
      * @param requestTask - model to process JSON request from client
      * Retrieves /WEB-INF/jsp/content/test/runTest.jsp
      *
-     * @return TaskModel
+     * @return JsonTaskModel
      */
     @RequestMapping(value = "/taskModel", method = RequestMethod.POST)
-    public @ResponseBody TaskModel getNextQuestion(@RequestBody RequestTask requestTask) {
+    public @ResponseBody
+    JsonTaskModel getNextQuestion(@RequestBody JsonRequestTask requestTask) {
         logger.info("runTest.jsp ");
 
         if (requestTask.getUserId() != 0) {
@@ -76,9 +80,9 @@ public class TestRunController extends TestAbstractController {
              * if not null then sending next task and saving score if it is positive
              * if taskNum value bigger then taskArrayList then redirecting to result page
              */
-            if (requestTask.getTaskNum() == null) {
+            if (requestTask.getTaskNum().equals(null)) {
                 // sending first task
-                taskModel = setJsonTaskModel(taskArrayList.get(0), requestTask.getUserId(), 0, null);
+                return userService.setJsonTaskModel(taskArrayList.get(0), requestTask.getUserId(), 0, null);
 
                 // sending next task
             } else {
@@ -88,57 +92,23 @@ public class TestRunController extends TestAbstractController {
                     int foo = user.getRating().getScore();
 
                     // saving score if it is positive
-                    if (requestTask.getAnswerNum() != null) {
+                    if (!requestTask.getAnswerNum().equals(null)) {
                         if (requestTask.getAnswerNum().equals(taskArrayList.get(taskNum).getCorrect())) {
 
                             userService.updateUserRating(requestTask.getUserId(), foo + 1);
                         }
                     }
                     // sending task with index 1, 2, 3, 4
-                    taskModel = setJsonTaskModel(taskArrayList.get(taskNum + 1),
+                    return userService.setJsonTaskModel(taskArrayList.get(taskNum + 1),
                             requestTask.getUserId(), taskNum + 1, null);
                 } else {
                     // redirecting to result page
-                    taskModel = setJsonTaskModel(null, null, null, "/test/result/" + requestTask.getUserId());
+                    return userService.setJsonTaskModel(null, null, null, "/test/result/" + requestTask.getUserId());
                 }
             }
         } else {
             // redirecting to authorisation page
-            taskModel = setJsonTaskModel(null, null, null, "/test/authorisation");
+            return userService.setJsonTaskModel(null, null, null, "/test/authorisation");
         }
-        return taskModel;
-    }
-
-    /**
-     * Method setting TaskModel bean for JSON object
-     *
-     * @param task    - current task to be work on;
-     * @param userId  - current used Id;
-     * @param taskNum - number of current task in the list;
-     * @param redirect - specified as URL if redirect must be maid on client side
-     * @return TaskModel object
-     */
-    protected TaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum, String redirect) {
-
-        TaskModel model = new TaskModel();
-        model.setUserId(userId);
-        model.setTaskNum(taskNum);
-
-        if (task != null) {
-            model.setQuestion(task.getQuestion());
-            model.setAnswer1(task.getAnswer1());
-            model.setAnswer2(task.getAnswer2());
-            model.setAnswer3(task.getAnswer3());
-            model.setAnswer4(task.getAnswer4());
-        } else {
-            model.setQuestion(null);
-            model.setAnswer1(null);
-            model.setAnswer2(null);
-            model.setAnswer3(null);
-            model.setAnswer4(null);
-        }
-
-        model.setRedirectURL(redirect);
-        return model;
     }
 }

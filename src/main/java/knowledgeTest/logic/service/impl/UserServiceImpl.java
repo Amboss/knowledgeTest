@@ -1,5 +1,6 @@
 package knowledgeTest.logic.service.impl;
 
+import knowledgeTest.model.JsonTaskModel;
 import knowledgeTest.logic.DAO.RatingDAO;
 import knowledgeTest.logic.DAO.TaskDAO;
 import knowledgeTest.logic.DAO.UserDAO;
@@ -7,7 +8,7 @@ import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.Rating;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
-import knowledgeTest.util.CustomUtil;
+import knowledgeTest.components.util.CustomUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,6 +106,8 @@ public class UserServiceImpl implements UserService {
      * @param amount - describes how many tasks have to be in list, can't be null or less then "1".
      * @return List of Task objects
      * @throws RuntimeException
+     *
+     * TODO change to ArrayList<Integer>
      */
     @Override
     public List<Task> getRandomListOfTasks(Integer amount) {
@@ -205,6 +208,40 @@ public class UserServiceImpl implements UserService {
         user.setStatus(0);
         user.setRating(new Rating(null, null, 0));
         userDAO.save(user);
+    }
+
+    /**
+     * Method setting JsonTaskModel bean for JSON object
+     *
+     * @param task    - current task to be work on;
+     * @param userId  - current used Id;
+     * @param taskNum - number of current task in the list;
+     * @param redirect - specified as URL if redirect must be maid on client side
+     * @return JsonTaskModel object
+     */
+    @Override
+    public JsonTaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum, String redirect) {
+
+        JsonTaskModel taskModel = new JsonTaskModel();
+        taskModel.setUserId(userId);
+        taskModel.setTaskNum(taskNum);
+
+        if (task != null) {
+            taskModel.setQuestion(task.getQuestion());
+            taskModel.setAnswer1(task.getAnswer1());
+            taskModel.setAnswer2(task.getAnswer2());
+            taskModel.setAnswer3(task.getAnswer3());
+            taskModel.setAnswer4(task.getAnswer4());
+        } else {
+            taskModel.setQuestion(null);
+            taskModel.setAnswer1(null);
+            taskModel.setAnswer2(null);
+            taskModel.setAnswer3(null);
+            taskModel.setAnswer4(null);
+        }
+
+        taskModel.setRedirectURL(redirect);
+        return taskModel;
     }
 }
 

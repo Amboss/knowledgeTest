@@ -1,4 +1,4 @@
-package knowledgeTest.util;
+package knowledgeTest.components.util;
 
 import java.util.ArrayList;
 
@@ -25,4 +25,5 @@ public interface CustomUtil {
      * @return true valid value, false invalid value
      */
     public boolean getPatternMatch(final Object value, String regex);
+
 }

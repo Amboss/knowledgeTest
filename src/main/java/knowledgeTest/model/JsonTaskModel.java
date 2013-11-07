@@ -1,4 +1,4 @@
-package knowledgeTest.bean;
+package knowledgeTest.model;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonAutoDetect;
  * Class represents model for JSON object, made to hold current task for Ajax request
  */
 @JsonAutoDetect
-public class TaskModel {
+public class JsonTaskModel {
 
     private Long userId;
 
@@ -24,10 +24,10 @@ public class TaskModel {
 
     private String redirectURL;
 
-    public TaskModel() {}
+    public JsonTaskModel() {}
 
-    public TaskModel(Long userId, Integer taskNum, String question,
-                     String answer1, String answer2, String answer3, String answer4, String redirectURL) {
+    public JsonTaskModel(Long userId, Integer taskNum, String question,
+                         String answer1, String answer2, String answer3, String answer4, String redirectURL) {
         this.userId = userId;
         this.taskNum = taskNum;
         this.question = question;

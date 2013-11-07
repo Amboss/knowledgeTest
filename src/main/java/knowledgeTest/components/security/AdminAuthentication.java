@@ -1,4 +1,4 @@
-package knowledgeTest.web.security;
+package knowledgeTest.components.security;
 
 import knowledgeTest.logic.DAO.UserDAO;
 import knowledgeTest.model.User;

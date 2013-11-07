@@ -1,6 +1,6 @@
-package knowledgeTest.util.impl;
+package knowledgeTest.components.util.utilImpl;
 
-import knowledgeTest.util.CustomUtil;
+import knowledgeTest.components.util.CustomUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -28,13 +28,11 @@ public class CustomUtilImpl implements CustomUtil {
     public ArrayList<Integer> getRandomNumbers(Integer amount, Integer maxRange) {
 
         assert amount != null : "Amount not specified!";
-
         assert amount >= 1 : "Amount can't be less then 1!";
-
         assert maxRange != null : "MaxRange not specified!";
-
         assert maxRange >= 1 : "MaxRange can't be less then 1!";
 
+        logger.debug("initiating getRandomNumbers");
 
         // define ArrayList to hold Integer objects
         ArrayList<Integer> arrayList = new ArrayList<>();
@@ -65,10 +63,14 @@ public class CustomUtilImpl implements CustomUtil {
     @Override
     public boolean getPatternMatch(final Object value, String regex) {
 
+        assert value != null;
+        assert !regex.equals(null);
+
+        logger.debug("initiating getPatternMatch");
+
         String targetValue = value.toString();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(targetValue);
-
         return matcher.matches();
     }
 }

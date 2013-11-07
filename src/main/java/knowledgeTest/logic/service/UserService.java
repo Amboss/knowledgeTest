@@ -1,5 +1,6 @@
 package knowledgeTest.logic.service;
 
+import knowledgeTest.model.JsonTaskModel;
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
 import org.springframework.stereotype.Service;
@@ -46,4 +47,11 @@ public interface UserService {
      * Create User for test
      */
     public void createUserForTest(String userName);
+
+
+    /**
+     * Method setting JsonTaskModel bean for JSON object
+     */
+    public JsonTaskModel setJsonTaskModel(Task task, Long userId, Integer taskNum, String redirect);
+
 }

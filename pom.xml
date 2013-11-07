@@ -47,6 +47,8 @@
         <mysql-connector-java.version>5.1.9</mysql-connector-java.version>
         <hsqldb.version>2.2.9</hsqldb.version>
 
+
+
         <!-- Logging properties-->
         <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
 
@@ -323,21 +325,11 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-core</artifactId>-->
-            <!--<version>${fasterxml.jackson.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-databind</artifactId>-->
-            <!--<version>${fasterxml.jackson.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-annotations</artifactId>-->
-            <!--<version>${fasterxml.jackson.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-ibatis</artifactId>
+            <version>2.0.8</version>
+        </dependency>
 
     </dependencies>
 

@@ -1,6 +1,6 @@
 package knowledgeTest.customUtil;
 
-import knowledgeTest.util.CustomUtil;
+import knowledgeTest.components.util.CustomUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * JUnit test for the {@link knowledgeTest.util.impl.CustomUtilImpl} class.
+ * JUnit test for the {@link knowledgeTest.components.util.utilImpl.CustomUtilImpl} class.
  * Testing custom util methods.
  * ApplicationContext will be loaded from "classpath:/application-context.xml"
  */

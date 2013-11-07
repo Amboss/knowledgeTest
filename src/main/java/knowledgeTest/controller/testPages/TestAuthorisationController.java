@@ -2,7 +2,7 @@ package knowledgeTest.controller.testPages;
 
 import knowledgeTest.logic.service.UserService;
 import knowledgeTest.model.User;
-import knowledgeTest.web.validation.UserValidation;
+import knowledgeTest.components.validation.UserValidation;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;

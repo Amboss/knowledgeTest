@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Class represents rating model for User entity
+ * Simple JavaBean domain object representing Rating
  * Table RATING connected with table TASK by "One to Many" mapping
  */
 @Entity
-@Table(name = "RATING", catalog = "KNOWLEDGE_TEST_DB")
+@Table(name = "RATING", catalog = "KNOWLEDGE_DB")
 public class Rating implements Serializable {
 
     private Long ratingId;

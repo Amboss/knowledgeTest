@@ -1,4 +1,4 @@
-package knowledgeTest.bean;
+package knowledgeTest.model;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonAutoDetect;
  * Class represents model to process JSON Ajax request
  */
 @JsonAutoDetect
-public class RequestTask {
+public class JsonRequestTask {
 
     private Long userId;
 
@@ -14,9 +14,9 @@ public class RequestTask {
 
     private Integer answerNum;
 
-    public RequestTask() {}
+    public JsonRequestTask() {}
 
-    public RequestTask(Long userId, Integer taskNum, Integer answerNum) {
+    public JsonRequestTask(Long userId, Integer taskNum, Integer answerNum) {
         this.userId = userId;
         this.taskNum = taskNum;
         this.answerNum = answerNum;

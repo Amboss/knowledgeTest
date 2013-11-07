@@ -3,10 +3,10 @@ package knowledgeTest.model;
 import javax.persistence.*;
 
 /**
- * Class represents task model with question and few answers
+ *  Simple JavaBean domain object representing Task
  */
 @Entity
-@Table(name = "TASK", catalog = "KNOWLEDGE_TEST_DB")
+@Table(name = "TASK", catalog = "KNOWLEDGE_DB")
 public class Task {
 
     private Long taskId;

@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Class represents model of User entity
+ *  Simple JavaBean domain object representing User
  * Table USER connected with table Rating by "One to One" mapping
  */
 @Entity
-@Table(name = "USER", catalog = "KNOWLEDGE_TEST_DB")
+@Table(name = "USER", catalog = "KNOWLEDGE_DB")
 public class User implements Serializable {
 
     private Long userId;

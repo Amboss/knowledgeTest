@@ -1,4 +1,4 @@
-package knowledgeTest.web.validation;
+package knowledgeTest.components.validation;
 
 import knowledgeTest.model.Task;
 import knowledgeTest.model.User;
